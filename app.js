@@ -15,6 +15,7 @@ app.set('view engine', 'ejs');
 //bodyparser
 app.use(bodyParser.urlencoded({extended: true}));
 
+//Connection to Atlas
 mongoose.connect('mongodb+srv://prakhar:C7GNob3mCp7wRgkq@cluster0.6nuob.mongodb.net/Cerial-Killers?retryWrites=true&w=majority', {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true, useFindAndModify: false}).then(() => {
   console.log('Connection Successful');
 }).catch((err) => { console.log(err);});
@@ -36,24 +37,7 @@ const users = mongoose.model("users", userSchema);
 
 //routes
 app.get('/', (req,res) => {
-    // //dummy object (testing purpose)
-    // let content={
-    // name: "Ojaswi Gupta",
-    // email: "ojaswi.2020ca051@mnnit.ac.in",
-    // password: "12345",
-    // degree: "MCA",
-    // college: "MNNIT",
-    // gradyear: "2023",
-    // linkedin: ".../coder-oj",
-    // result: [{prediction: "System Analyst",date: Date().substring(4,21) + " IST"}, {prediction: "Product Manager",date: Date().substring(4,21) + " IST"}]   
-    // };
-    //   //creating new document for each new user
-    //   const user= new users(content);
-    //   console.log(content);// console (testing)
-    //   //data saved to db
-    //   user.save();
-
-      //res.send("Welcome");
+    
     res.render('home');
 });
 
