@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const Admin = require('../models/Admin');
 const jwt = require('jsonwebtoken');
 
 const handleErrors = (err) =>{
@@ -30,6 +31,35 @@ const handleErrors = (err) =>{
     return errors;
 }
 
+const handleErrorsAdmin = (err) =>{
+    console.log(err.message, err.code);
+    let errors = { email: '', password: ''};
+
+    //duplicate email error
+    if(err.code===11000){
+        errors.email = 'Email already in use!';
+        return errors;
+    }
+
+    // incorrect email
+    if( err.message === 'Incorrect Email!'){
+        errors.email = 'This email is not registered';
+    }
+
+    // incorrect password
+    if( err.message === 'Incorrect Password!'){
+        errors.password = 'That password is not correct';
+    }
+
+    //validation errors
+    if(err.message.includes('admins validation failed')) {
+        Object.values(err.errors).forEach(({properties}) => {
+           errors[properties.path] = properties.message; 
+        });
+    }
+    return errors;
+}
+
 const maxAge=3*24*60*60;
 const createToken = (id) => {
     return jwt.sign({ id }, 'secret string', {
@@ -39,6 +69,14 @@ const createToken = (id) => {
 
 module.exports.login_get = (req,res) => {
     res.render('login');
+}
+
+module.exports.adminlogin_get = (req,res) => {
+    res.render('adminlogin');
+}
+
+module.exports.adminsignup_get = (req,res) => {
+    res.render('adminsignup');
 }
 
 module.exports.signup_get = (req,res) => {
@@ -73,7 +111,40 @@ module.exports.login_post = async (req,res) => {
     }
 }
 
+module.exports.adminlogin_post = async (req,res) => {
+    const { email, password } = req.body;
+    try {
+        const admin = await Admin.login(email,password);
+        const token = createToken(admin._id);
+        res.cookie('jwtadm',token, { httpOnly: true, maxAge: maxAge*1000});
+        res.status(200).json({admin: admin._id});
+    } 
+    catch (error) {
+        const errors = handleErrorsAdmin(error);
+        res.status(400).json({errors});
+    }
+}
+
+module.exports.adminsignup_post = async (req,res) => {
+    const { name, email, password, organization, orgwebsite, linkedin } = req.body;
+    try {
+        const admin = await Admin.create({ name, email, password, organization, orgwebsite, linkedin });
+        const token = createToken(admin._id);
+        res.cookie('jwtadm',token, { httpOnly: true,maxAge: maxAge*1000});
+        res.status(201).json({admin: admin._id});
+    } 
+    catch (error) {
+      const errors = handleErrorsAdmin(error);
+      res.status(400).json({ errors });
+    }
+}
+
 module.exports.logout_get = (req,res) =>{
     res.cookie('jwt', '', { maxAge: 1});  //maxAge 1 ms; expires quickly
+    res.redirect('/');
+}
+
+module.exports.adminlogout_get = (req,res) =>{
+    res.cookie('jwtadm', '', { maxAge: 1});  //maxAge 1 ms; expires quickly
     res.redirect('/');
 }

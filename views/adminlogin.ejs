@@ -7,10 +7,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
-    <title>User Login page</title>
+    <title>Admin Login page</title>
 </head>
 <body>
-    <h1>User Login</h1>
+    <h1>Admin Login</h1>
     <div class="container-md">
     <form class="row g-3" >
         
@@ -33,7 +33,6 @@
               </div>
         </div>
         
-       
         <div class="col-12">
           <button class="btn btn-primary">Login</button>
         </div>
@@ -56,7 +55,7 @@
             const email = form.email.value;
             const password = form.password.value;
             try {
-                const res = await fetch('/login', {
+                const res = await fetch('/adminlogin', {
                     method: 'POST',
                     body: JSON.stringify({email, password}),
                     headers: {'Content-Type': 'application/json'}
@@ -67,8 +66,8 @@
                     emailError.textContent = data.errors.email;
                     passwordError.textContent = data.errors.password;
                 }
-                if(data.user) {
-                    location.assign('/');
+                if(data.admin) {
+                    location.assign('/adminhome');
                 }
             } catch (error) {
                 console.log(error);

@@ -1,13 +1,15 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const ejs = require("ejs");
-const bodyParser = require("body-parser");
+const ejs = require('ejs');
+const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const dotenv = require('dotenv');
 
-const { requireAuth, checkUser } = require('./middleware/authMiddleware');
+const { requireAuth, checkUser, requireAuthAdmin, checkAdmin } = require('./middleware/authMiddleware');
 const authRoutes = require('./routes/authRoutes');
 
 const app = express();
+dotenv.config({path: './.env'});
 
 //middleware
 app.use(express.static(__dirname+'/public'));
@@ -21,17 +23,22 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 
 //Connection to Atlas
-mongoose.connect('mongodb+srv://prakhar:C7GNob3mCp7wRgkq@cluster0.6nuob.mongodb.net/Cerial-Killers', {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true, useFindAndModify: false}).then(() => {
+mongoose.connect(process.env.DATABASE_URL , {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true, useFindAndModify: false}).then(() => {
   console.log('Connection Successful');
 }).catch((err) => { console.log(err);});
 
-//routes
+//middleware
+app.get('/', checkUser);
+app.get('/main-form', checkUser);
+app.get('/adminhome', checkAdmin);
 
-app.get('*', checkUser);
+//routes
 app.get('/', (req,res) => { 
     res.render('home');
 });
 app.get('/main-form', requireAuth, (req, res) => res.render('main-form'));
+app.get('/adminhome', requireAuthAdmin, (req, res) => res.render('adminhome'));
+
 app.use(authRoutes);
 
 const port = 8000;
