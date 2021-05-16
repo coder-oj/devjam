@@ -1,2 +1,2 @@
 # devjam project
-# Made by OJ, UMANG, PRAKHAR, ARCHIT
+## In making by OJ, UMANG, PRAKHAR, ARCHIT
