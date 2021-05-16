@@ -41,6 +41,23 @@ app.get('/adminhome', requireAuthAdmin, (req, res) => res.render('adminhome'));
 
 app.use(authRoutes);
 
+
+app.post('/demo',(req,res)=>{
+
+  let spwan = require('child_process').spawn;
+  console.log(req.body.fname);
+  var formdata = req.body.fname;
+  var process = spwan('py',['./abc.py',
+  'Archit',formdata
+  ]
+  );
+  process.stdout.on('data',(data)=>{
+    d = data.toString();
+    res.send(d);
+  });
+
+});
+
 const port = 8000;
 app.listen(port, () =>{
     console.log(`Server is running on localhost ${port}`);
