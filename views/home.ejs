@@ -1,20 +1,38 @@
 <%- include('partials/header'); -%>
+<!-- ======= Hero Section ======= -->
+<section id="hero">
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home  Page</title>
-</head>
-<body>
-    <h1>Home Page</h1>
-    <a href="/main-form" >Click here to assess yourself!</a>
+    <div class="container">
+      <div class="row d-flex align-items-center">
+      <div class="col-lg-6 py-5 py-lg-0 order-2 order-lg-1" data-aos="fade-right">
+        <h1>Get your Career Destiny predict</h1>
+        <h2>On the basis of your Technical Skills and Interest</h2>
+        <% if (!user) { %>
+        <a href="/signup" class="btn-get-started scrollto">Register Yourself</a>
+        <% } %>
+      </div>
+      <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="fade-left">
+        <img src="assets/img/career2.png" class="img-fluid" alt="">
+      </div>
+    </div>
+    </div>
+
+</section><!-- End Hero -->
+    
+    
     <form action="/demo" method="POST">
         Name : <input type="text" name="fname"> 
         <button type="submit">Send to backend</button>
     </form>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    <script src="assets/vendor/aos/aos.js"></script>
+  
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  
+  
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
 
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
 </body>
 </html>
