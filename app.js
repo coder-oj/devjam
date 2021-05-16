@@ -35,12 +35,13 @@ app.get('/main-form', requireAuth, (req, res) => res.render('main-form'));
 app.use(authRoutes);
 
 
-app.get('/python',(req,res)=>{
+app.post('/demo',(req,res)=>{
 
   let spwan = require('child_process').spawn;
+  console.log(req.body.fname);
+  var formdata = req.body.fname;
   var process = spwan('py',['./abc.py',
-  'Archit',
-  'keshri'
+  'Archit',formdata
   ]
   );
   process.stdout.on('data',(data)=>{
