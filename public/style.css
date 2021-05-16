@@ -1,3 +1,25 @@
 body{
     margin:20px;
 }
+
+nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 120px;
+  }
+  nav ul{
+    display: flex;
+    align-items: center;
+  }
+  nav li{
+    margin-left: 20px;
+  }
+  nav li a{
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 0.8em;
+    display: block;
+    padding: 10px 16px;
+    letter-spacing: 2px;
+  }

@@ -10,74 +10,71 @@
     <title>Login page</title>
 </head>
 <body>
+    <h1>Login</h1>
     <div class="container-md">
-    <form class="row g-3" action='/login' method='post'>
-        <div class="row">
-            <div class="col-md-6">
-                <label for="name" class="form-label">Name</label>
-                <input type="text" class="form-control" id="name" name="name" required>
-              </div>
-        </div>
+    <form class="row g-3" >
         
         <div class="row">
             <div class="col-md-3">
-                <label for="validationDefaultUsername" class="form-label">E-mail</label>
+                <label for="email" class="form-label">E-mail</label>
                 <div class="input-group">
                   <span class="input-group-text" id="inputGroupPrepend2"><i class="fas fa-at"></i></span>
-                  <input type="email" class="form-control" id="validationDefaultUsername" name="email" aria-describedby="inputGroupPrepend2" required>
+                  <input type="text" class="form-control" id="validationDefaultUsername" name="email" aria-describedby="inputGroupPrepend2" required>
+                  <div class="email error"></div>
                 </div>
               </div>
               <div class="col-md-3">
-                <label for="pass" class="form-label">Password</label>
+                <label for="password" class="form-label">Password</label>
                 <div class="input-group">
                   <span class="input-group-text" id="inputGroupPrepend2"><i class="fas fa-key"></i></span>
                   <input type="password" class="form-control" id="pass" name="password" aria-describedby="inputGroupPrepend2" required>
+                  <div class="password error"></div>
                 </div>
               </div>
         </div>
         
-        <div class="row">
-            <div class="col-md-2">
-                <label for="degree" class="form-label">Degree</label>
-                <select class="form-select" name="degree" id="degree" required>
-                  <option selected disabled value="">Choose...</option>
-                  <option value="B.Tech">B.Tech</option>
-                  <option value="MCA">MCA</option>
-                  <option value="BCA">BCA</option>
-                  <option value="Bsc(cs)">Bsc(CS)</option>
-                </select>
-              </div>
-              <div class="col-md-2">
-                  <label for="college" class="form-label">College</label>
-                  <input type="text" class="form-control" name="college" id="college" required>
-              </div>
-              <div class="col-md-2">
-                  <label for="gyear" class="form-label">Graduation Year</label>
-                  <input type="text" class="form-control" name="gyear" id="gyear" required>
-              </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-3">
-                <label for="pass" class="form-label">LinkedIn</label>
-                <div class="input-group">
-                  <span class="input-group-text" id="linkedin"><i class="fab fa-linkedin"></i></span>
-                  <input type="text" class="form-control" id="linkedin" name="linkedin"  aria-describedby="inputGroupPrepend2" required>
-                </div>
-            </div>
-        </div>
        
         <div class="col-12">
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
-            <label class="form-check-label" for="invalidCheck2">
-              Agree to terms and conditions
-            </label>
-          </div>
+          <button class="btn btn-primary">Login</button>
         </div>
-        <div class="col-12">
-          <button class="btn btn-primary" type="submit">Submit form</button>
-        </div>
-      </form></div>
+      </form>
+    </div>
+
+    <script>
+        const form = document.querySelector('form');
+        const emailError = document.querySelector('.email.error');
+        const passwordError = document.querySelector('.password.error');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            //reser Errors
+            emailError.textContent ='';
+            passwordError.textContent='';
+
+            //get the values
+            const email = form.email.value;
+            const password = form.password.value;
+            try {
+                const res = await fetch('/login', {
+                    method: 'POST',
+                    body: JSON.stringify({email, password}),
+                    headers: {'Content-Type': 'application/json'}
+                });
+                const data = await res.json();
+                console.log(data);
+                if(data.errors) {
+                    emailError.textContent = data.errors.email;
+                    passwordError.textContent = data.errors.password;
+                }
+                if(data.user) {
+                    location.assign('/');
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        })
+    </script>
+
 </body>
 </html>
