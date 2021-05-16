@@ -34,6 +34,22 @@ app.get('/', (req,res) => {
 app.get('/main-form', requireAuth, (req, res) => res.render('main-form'));
 app.use(authRoutes);
 
+
+app.get('/python',(req,res)=>{
+
+  let spwan = require('child_process').spawn;
+  var process = spwan('py',['./abc.py',
+  'Archit',
+  'keshri'
+  ]
+  );
+  process.stdout.on('data',(data)=>{
+    d = data.toString();
+    res.send(d);
+  });
+
+});
+
 const port = 8000;
 app.listen(port, () =>{
     console.log(`Server is running on localhost ${port}`);
