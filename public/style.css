@@ -23,3 +23,13 @@ nav{
     padding: 10px 16px;
     letter-spacing: 2px;
   }
+
+  .row{
+    padding: 6px;
+    margin:2px;
+    }
+    .container-md{
+      border: 1px black solid;
+      border-radius: 10px;
+      z-index:3px;
+    }
