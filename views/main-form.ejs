@@ -1,14 +1,327 @@
 <%- include('partials/header'); -%>
 
+<!--%- include('partials/header'); -%-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <title>Signup page</title>
 </head>
-<body>
-    <h1>Form accessible after login</h1>
+<body style="margin:20px">
+    <div class="container-md">
+		<div class="row justify-content-center">
+			<h3 class="col-3">Questionaire Form
+			</h3>
+		</div>
+        <form class="row" action="" method="POST">
+		<div class="row"><div class="col-md-6">
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="q1" class="form-label">Logical Quotient Rating</label>
+                </div>
+				<div class="col-md-4">
+                    <input type="range" class="form-range" min="0" max="9" name="q1" id="q1" onchange="updateTextInput(this.value, 'v1');">
+					<span id="textInpu"></span>
+				</div>
+				<div class="col-md-2"><span id="v1">5</span></div>
+            </div>
+			<div class="row">
+                <div class="col-md-4">
+                    <label for="q2" class="form-label">Coding Skill Rating</label>
+                </div>
+				<div class="col-md-4">
+                    <input type="range" class="form-range" min="0" max="9" name="q2" id="q2" onchange="updateTextInput(this.value, 'v2');">
+                </div>
+				<div class="col-md-2"><span id="v2">5</span></div>
+            </div>
+			<div class="row">
+                <div class="col-md-4">
+                    <label for="q3" class="form-label">Hackathon</label>
+                </div>
+				<div class="col-md-4">
+					<input type="range" class="form-range" min="0" max="9" name="q3" id="q3" onchange="updateTextInput(this.value, 'v3');">
+				</div>
+				<div class="col-md-2"><span id="v3">5</span></div>
+            </div>
+			<div class="row">
+                <div class="col-md-4">
+					<label for="q4" class="form-label">Public Speaking points </label>
+				</div>
+			    <div class="col-md-4">
+					<input type="range" class="form-range" min="0" max="9" name="q4" id="q4" onchange="updateTextInput(this.value, 'v4');">
+				</div>
+				<div class="col-md-2"><span id="v4">5</span></div>
+            </div>
+			<div class="row">
+                <div class="col-md-4">
+					<label for="q5" class="form-label">Self Learning Capability</label>
+				</div>
+			    <div class="col-md-4">
+					<input type="range" class="form-range" min="0" max="9" name="q5" id="q5" onchange="updateTextInput(this.value, 'v5');">
+				</div>
+				<div class="col-md-2"><span id="v5">5</span></div>
+            </div>
+			<div class="row">
+			    <div class="col-md-4">Extra Courses did?</div>
+				<div class="col-md-3">
+					<input class="form-check-input" type="radio" name="q6" id="q6a" value="yes" required>
+					<label class="form-check-label" for="q6a">Yes</label>
+				</div>
+				<div class="col-md-3">
+					<input class="form-check-input" type="radio" name="q6" id="q6b" value="no">
+					<label class="form-check-label" for="q6b">No</label>
+				</div>				
+			</div>
+			<div class="row">
+			    <div class="col-md-4">Taken inputs from Seniors?</div>
+				<div class="col-md-3">
+					<input class="form-check-input" type="radio" name="q7" id="q7a" value="yes" required>
+					<label class="form-check-label" for="q7a">Yes</label>
+				</div>
+				<div class="col-md-3">
+					<input class="form-check-input" type="radio" name="q7" id="q7b" value="no">
+					<label class="form-check-label" for="q7b">No</label>
+				</div>				
+			</div>
+			<div class="row">
+			    <div class="col-md-4">Worked in team ever?</div>
+				<div class="col-md-3">
+					<input class="form-check-input" type="radio" name="q8" id="q8a" value="yes" required>
+					<label class="form-check-label" for="q8a">Yes</label>
+				</div>
+				<div class="col-md-3">
+					<input class="form-check-input" type="radio" name="q8" id="q8b" value="no">
+					<label class="form-check-label" for="q8b">No</label>
+				</div>				
+			</div>
+			<div class="row">
+			    <div class="col-md-4">Introvert?</div>
+				<div class="col-md-3">
+					<input class="form-check-input" type="radio" name="q9" id="q9a" value="1" required> 
+					<label class="form-check-label" for="q9a">Yes</label>
+				</div>
+				<div class="col-md-3">
+					<input class="form-check-input" type="radio" name="q9" id="q9b" value="0">
+					<label class="form-check-label" for="q9b">No</label>
+				</div>				
+			</div>
+			<div class="row">
+                <div class="col-md-4">
+					<label for="q10" class="form-label">Reading and Writing Skills</label>
+				</div>
+			    <div class="col-md-3">
+					<input class="form-check-input" type="radio" name="q10" id="q10a" value="excellent" required>
+					<label class="form-check-label" for="q10a" >Excellent</label>
+				</div>
+				<div class="col-md-3">
+					<input class="form-check-input" type="radio" name="q10" id="q10b" value="medium">
+					<label class="form-check-label" for="q10b">Medium</label>
+				</div>
+				<div class="col-md-2">
+					<input class="form-check-input" type="radio" name="q10" id="q10c" value="poor">
+					<label class="form-check-label" for="q10c">Poor</label>
+				</div>		
+            </div>
+			<div class="row">
+                <div class="col-md-4">
+					<label for="q11" class="form-label">Memory Capability</label>
+				</div>
+			    <div class="col-md-3">
+					<input class="form-check-input" type="radio" name="q11" id="q11a" value="excellent" required>
+					<label class="form-check-label" for="q11a">Excellent</label>
+				</div>
+				<div class="col-md-3">
+					<input class="form-check-input" type="radio" name="q11" id="q11b" value="medium">
+					<label class="form-check-label" for="q11b">Medium</label>
+				</div>
+				<div class="col-md-2">
+					<input class="form-check-input" type="radio" name="q11" id="q11c" value="poor">
+					<label class="form-check-label" for="q11c">Poor</label>
+				</div>				
+            </div>
+			<div class="row">
+			    <div class="col-md-4">Hard/Smart Worker</div>
+				<div class="col-md-3">
+					<input class="form-check-input" type="radio" name="q12" id="q12a" value="hard worker" required>
+					<label class="form-check-label" for="q12a">Hard</label>
+				</div>
+				<div class="col-md-3">
+					<input class="form-check-input" type="radio" name="q12" id="q12b" value="smart worker">
+					<label class="form-check-label" for="q12b">Smart</label>
+				</div>				
+			</div>
+			</div>
+			<div class="col-md-6">
+			<div class="row">
+                <div class="col-md-4">
+                    <label for="q13" class="form-label">Interested Subject</label>
+                </div>
+				<div class="col-md-4">
+					<select class="form-select" name="q13" id="q13" required>
+                      <option selected disabled value="">Choose...</option>
+                      <option value="Software Engineering">Software Engineering</option>
+                      <option value="IOT ">IOT</option>
+                      <option value="cloud computing">Cloud Computing</option>
+                      <option value="programming">Computer Programming</option>
+					  <option value="networks">Computer Networks</option>
+                      <option value="data engineering">Data Engineering </option>
+                      <option value="hacking">Hacking</option>
+                      <option value="Management">Management</option>
+                      <option value="parallel computing">Parallel Computing</option>
+                    </select>
+				</div>
+            </div>
+			<div class="row">
+                <div class="col-md-4">
+                    <label for="q14" class="form-label">Interested Type of Books </label>
+                </div>
+				<div class="col-md-4">
+					<select class="form-select" name="q14" id="q14" required>
+                      <option selected disabled value="">Choose...</option>
+                      <option value="Health">Health</option>
+                      <option value="Self help">Self help</option>
+                      <option value="Horror">Horror</option>
+                      <option value="Biographies">Biographies</option>
+					  <option value="Science fiction">Science fiction</option>
+                      <option value="Childrens">Childrens</option>
+                      <option value="Satire">Satire</option>
+                      <option value="Prayer books">Prayer books</option>
+                      <option value="Fantasy">Fantasy</option>
+					  <option value="Journals">Journals</option>
+                      <option value="Trilogy">Trilogy</option>
+                      <option value="Anthology">Anthology</option>
+                      <option value="Encyclopedias">Encyclopedias</option>
+					  <option value="Drama">Drama</option>
+                      <option value="Mystery">Mystery</option>
+                      <option value="History">History</option>
+                      <option value="Dictionaries">Dictionaries</option>
+                      <option value="Science">Science</option>
+					  <option value="Religion-Spirituality">Religion-Spirituality</option>
+                      <option value="Diaries">Diaries</option>
+                      <option value="Poetry">Poetry</option>
+                      <option value="Action and Adventure">Action and Adventure</option>
+					  <option value="Cookbooks">Cookbooks</option>
+                      <option value="Travel">Travel</option>
+                      <option value="Art">Art</option>
+                      <option value="Comics">Comics</option>
+                      <option value="Series">Series</option>
+					  <option value="Math">Math</option>
+                      <option value="Romance">Romance</option>
+                    </select>
+				</div>
+            </div>                              
+			<div class="row">
+                <div class="col-md-4">
+                    <label for="q15" class="form-label">Certification</label>
+                </div>
+				<div class="col-md-4">
+					<select class="form-select" name="q15" id="q15" required>
+						<option selected disabled value="">Choose...</option>
+						<option value="r programming">R Programming</option>
+						<option value="information security">Information Security</option>
+						<option value="shell programming">Shell Programming</option>
+						<option value="machine learning">Machine Learning</option>
+						<option value="full stack">Full Stack</option>
+						<option value="hadoop">Hadoop</option>
+						<option value="python">Python</option>
+						<option value="distro making">Distro Making</option>
+						<option value="app development">App Development</option>
+					</select>
+				</div>
+            </div>    
+			<div class="row">
+                <div class="col-md-4">
+                    <label for="q16" class="form-label">Workshop</label>
+                </div>
+				<div class="col-md-4">
+					<select class="form-select" name="q16" id="q16" required>
+						<option selected disabled value="">Choose...</option>
+						<option value="database security">Database Security</option>
+						<option value="web technologies">Web Technologies</option>
+						<option value="system designing">System Designing</option>
+						<option value="hacking">Hacking</option>
+						<option value="testing">Testing</option>
+						<option value="data science">Data Science</option>
+						<option value="game development">Game Development</option>
+						<option value="cloud computing">Cloud Computing</option>
+					</select>
+				</div>
+            </div> 
+			<div class="row">
+                <div class="col-md-4">
+                    <label for="q17" class="form-label">Type of company want to settle in?</label>
+                </div>
+				<div class="col-md-4">
+					<select class="form-select" name="q17" id="q17" required>
+						<option selected disabled value="">Choose...</option>
+						<option value="Service Based">Service Based</option>
+						<option value="Web Services">Web Services</option>
+						<option value="BPA">BPA</option>
+						<option value="Testing and Maintainance Services">Testing and Maintainance Services</option>
+						<option value="Product based">Product based</option>
+						<option value="Finance">Finance</option>
+						<option value="Cloud Services">Cloud Services</option>
+						<option value="product development">product development</option>
+						<option value="Sales and Marketing">Sales and Marketing</option>
+						<option value="SAaS services">SAaS Services</option>
+					</select>
+				</div>
+            </div> 
+			<div class="row">
+			    <div class="col-md-4">Management or Technical</div>
+				<div class="col-md-4">
+					<input class="form-check-input" type="radio" name="q18" id="q18a" value="Management" required>
+					<label class="form-check-label" for="q18a">Management</label>
+				</div>
+				<div class="col-md-4">
+					<input class="form-check-input" type="radio" name="q18" id="q18b" value="Technical">
+					<label class="form-check-label" for="q18b">Technical</label>
+				</div>				
+			</div>
+   			<div class="row">
+                <div class="col-md-4">
+                    <label for="q19" class="form-label">Interested Career Area </label>
+                </div>
+				<div class="col-md-4">
+					<select class="form-select" name="q19" id="q19" required>
+						<option selected disabled value="">Choose...</option>
+						<option value="system developer">System Developer</option>
+						<option value="security">Security</option>
+						<option value="Business process analyst">Business Process Analyst</option>
+						<option value="developer">Developer</option>
+						<option value="testing">Testing</option>
+						<option value="cloud computing">Cloud Computing</option>
+					</select>
+				</div>
+            </div> 
+			</div>
+			<div class="row">
+				<div class="col-12">
+				  <div class="form-check">
+					<input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
+					<label class="form-check-label" for="invalidCheck2">
+					  Agree to terms and conditions
+					</label>
+				  </div>
+				</div>
+			</div>
+			<div class="row">
+            <div class="col-12">
+              <button class="btn btn-primary" >Submit form</button>
+            </div></div>
+        </form>
+    </div>
+	
+	<script>
+		function updateTextInput(val,valn) {
+          document.getElementById(valn).innerHTML=val; 
+        }
+	</script>
 </body>
 </html>
