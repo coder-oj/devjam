@@ -5,13 +5,14 @@ from sklearn import tree
 from sklearn.metrics import confusion_matrix,accuracy_score
 from sklearn import svm
 from xgboost import XGBClassifier
+import pickle
 
 
 #Loading Dataset
-df = pd.read_csv('https://raw.githubusercontent.com/Umang-19/devjam/main/mldata.csv?token=AMBJKKIJASIVIAPC37MHH23AVFMKM')
+# df = pd.read_csv('https://raw.githubusercontent.com/Umang-19/devjam/main/mldata.csv?token=AMBJKKIJASIVIAPC37MHH23AVFMKM')
+df = pd.read_csv('mldata.csv')
 
-
-
+print("Dataset Loaded successfully!")
 # Number Encoding
 cols = df[["self-learning capability?", "Extra-courses did","Taken inputs from seniors or elders", "worked in teams ever?", "Introvert"]]
 for i in cols:
@@ -66,7 +67,8 @@ clf = clf.fit(x_train, y_train)
 # print("accuracy=",accuracy*100)
 
 
-file = open('model.pkl', 'wb')
-    
+file = open('model.pkl', 'wb') 
 pickle.dump(clf, file)
 file.close()
+
+print("Model Building Done!")
