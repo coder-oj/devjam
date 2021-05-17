@@ -46,30 +46,31 @@ app.post('/demo',(req,res)=>{
 
   let spwan = require('child_process').spawn;
   console.log(req.body);
-  // var q1 = req.body.q1;
-  // var q2 = req.body.q2;
-  // var q3 = req.body.q3;
-  // var q4 = req.body.q4;
-  // var q5 = req.body.q5;
-  // var q6 = req.body.q6;
-  // var q7 = req.body.q7;
-  // var q8 = req.body.q8;
-  // var q9 = req.body.q9;
-  // var q10 = req.body.q10;
-  // var q11 = req.body.q11; 
-  // var q12 = req.body.q12;
-  // var q13 = req.body.q13;
-  // var q14 = req.body.q14;
-  // var q15 = req.body.q15;
-  // var q16 = req.body.q16;
-  // var q17 = req.body.q17;
-  // var q18 = req.body.q18;
-  // var q19 = req.body.q19;
-  // var process = spwan('py',['./abc.py',q1, q2, q3, q4, q5, q6, q7, q8, q9, q10,
-  //               q11, q12, q13, q14, q15, q16, q17, q18, q19 ]
+  var q1 = req.body.q1;
+  var q2 = req.body.q2;
+  var q3 = req.body.q3;
+  var q4 = req.body.q4;
+  var q5 = req.body.q5;
+  var q6 = req.body.q6;
+  var q7 = req.body.q7;
+  var q8 = req.body.q8;
+  var q9 = req.body.q9;
+  var q10 = req.body.q10;
+  var q11 = req.body.q11; 
+  var q12 = req.body.q12;
+  var q13 = req.body.q13;
+  var q14 = req.body.q14;
+  var q15 = req.body.q15;
+  var q16 = req.body.q16;
+  var q17 = req.body.q17;
+  var q18 = req.body.q18;
+  var q19 = req.body.q19;
+  var process = spwan('py',['./public/predict.py',q1, q2, q3, q4, q5, q6, q7, q8, q9, q10,
+                q11, q12, q13, q14, q15, q16, q17, q18, q19 ]
 
-  userdata = req.body;
-  var process = spwan('py',['./abc.py', userdata]
+  // userdata = req.body;
+  // var process = spwan('py',['./abc.py', userdata]
+
   );
   process.stdout.on('data',(data)=>{
     d = data.toString();
