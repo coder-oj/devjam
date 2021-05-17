@@ -1,15 +1,13 @@
 #Importing Libraries
 import pandas as pd
+import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn import tree
 from sklearn.metrics import confusion_matrix,accuracy_score
-from sklearn import svm
-from xgboost import XGBClassifier
 import pickle
 
 
 #Loading Dataset
-# df = pd.read_csv('https://raw.githubusercontent.com/Umang-19/devjam/main/mldata.csv?token=AMBJKKIJASIVIAPC37MHH23AVFMKM')
 df = pd.read_csv('mldata.csv')
 
 print("Dataset Loaded successfully!")
@@ -39,10 +37,11 @@ df = pd.get_dummies(df, columns=["Management or Technical", "hard/smart worker"]
 
 
 # Building Model
-feed = df[['Logical quotient rating', 'hackathons', 'coding skills rating', 'public speaking points', 'self-learning capability?','Extra-courses did', 
-           'reading and writing skills', 'memory capability score', 'Taken inputs from seniors or elders', 'worked in teams ever?', 
-           'Introvert','certifications_code', 'workshops_code', 'Interested subjects_code', 'interested career area _code', 
-           'Type of company want to settle in?_code', 'Interested Type of Books_code', 'A_Management', 'A_Technical', 'B_hard worker', 'B_smart worker', 'Suggested Job Role']]
+feed = df[['Logical quotient rating', 'coding skills rating', 'hackathons', 'public speaking points', 'self-learning capability?','Extra-courses did', 
+           'Taken inputs from seniors or elders', 'worked in teams ever?', 'Introvert', 'reading and writing skills', 'memory capability score',  
+           'B_hard worker', 'B_smart worker', 'A_Management', 'A_Technical', 'Interested subjects_code', 'Interested Type of Books_code', 'certifications_code', 
+           'workshops_code', 'Type of company want to settle in?_code',  'interested career area _code',
+             'Suggested Job Role']]
 
 
 # Taking all independent variable columns
@@ -59,14 +58,17 @@ x_train, x_test, y_train, y_test = train_test_split(df_train_x, df_train_y, test
 clf = tree.DecisionTreeClassifier()
 clf = clf.fit(x_train, y_train)
 
-# y_pred = clf.predict(x_test)
-# cm = confusion_matrix(y_test,y_pred)
-# accuracy = accuracy_score(y_test,y_pred)
-# print("confusion matrics=",cm)
-# print("  ")
-# print("accuracy=",accuracy*100)
 
+# feed = df[['Logical quotient rating', 'coding skills rating', 'hackathons', 'public speaking points', 'self-learning capability?','Extra-courses did', 
+#            'Taken inputs from seniors or elders', 'worked in teams ever?', 'Introvert', 'reading and writing skills', 'memory capability score',  
+#            'B_hard worker', 'B_smart worker', 'A_Management', 'A_Technical', 'Interested subjects_code', 'Interested Type of Books_code', 'certifications_code', 
+#            'workshops_code', 'Type of company want to settle in?_code',  'interested career area _code',
+#              'Suggested Job Role']]
 
+# Network Security Engineer
+print(clf.predict([['5','5','5','5','1','0','1', '2', '1', '1', '0', '3','3', 
+                    '4','4','2','7','0','1','0','1']])) 
+                  
 file = open('model.pkl', 'wb') 
 pickle.dump(clf, file)
 file.close()
