@@ -8,7 +8,7 @@ import pickle
 
 
 #Loading Dataset
-df = pd.read_csv('mldata.csv')
+df = pd.read_csv('D:\devjam\public\mldata.csv')
 
 print("Dataset Loaded successfully!")
 # Number Encoding
@@ -66,7 +66,7 @@ clf = clf.fit(x_train, y_train)
 #              'Suggested Job Role']]
 
 # Network Security Engineer
-print(clf.predict([['5','5','5','5','1','0','1', '2', '1', '1', '0', '3','3', 
+print(clf.predict([['9','9','9','9','1','0','1', '2', '1', '1', '0', '3','3', 
                     '4','4','2','7','0','1','0','1']])) 
                   
 file = open('model.pkl', 'wb') 

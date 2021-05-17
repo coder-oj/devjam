@@ -65,7 +65,7 @@ app.post('/demo',(req,res)=>{
   var q17 = req.body.q17;
   var q18 = req.body.q18;
   var q19 = req.body.q19;
-  var process = spwan('py',['./public/predict.py',q1, q2, q3, q4, q5, q6, q7, q8, q9, q10,
+  var process = spwan('py',['./public/training.py',q1, q2, q3, q4, q5, q6, q7, q8, q9, q10,
                 q11, q12, q13, q14, q15, q16, q17, q18, q19 ]
 
   // userdata = req.body;
