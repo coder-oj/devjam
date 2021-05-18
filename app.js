@@ -84,7 +84,7 @@ app.post('/demo',checkUser, (req,res)=>{
 
   );
    console.log('id'+ res.locals.user._id);
-  console.log(Date.now())
+  
   process.stdout.on('data',(data)=>{
     d = data.toString();
     var str = d.split("\r\n");
@@ -92,11 +92,11 @@ app.post('/demo',checkUser, (req,res)=>{
     
 
     // to get current date
-    var todayTime = new Date();
-    var month = todayTime .getMonth() + 1;
-    var day = todayTime .getDate();
-    var year = todayTime .getFullYear();
-    var date = day + "/" + month + "/" + year;
+    // var todayTime = new Date();
+    // var month = todayTime .getMonth() + 1;
+    // var day = todayTime .getDate();
+    // var year = todayTime .getFullYear();
+    var date = Date().substring(4,21) + " IST";
     
    
     var prediction = {
@@ -104,6 +104,15 @@ app.post('/demo',checkUser, (req,res)=>{
       s2 : str[1].slice(2,str[1].length-2),
       s3: str[2].slice(2,str[2].length-2),
       date:date
+    }
+    if(prediction.s1 === "Software Quality Assurance (QA) / Testing"){
+      prediction.s1 = "Software Quality Assurance";
+    }
+    if(prediction.s2 === "Software Quality Assurance (QA) / Testing"){
+      prediction.s2 = "Software Quality Assurance";
+    }
+    if(prediction.s3 === "Software Quality Assurance (QA) / Testing"){
+      prediction.s3 = "Software Quality Assurance";
     }
    
   
