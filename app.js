@@ -10,6 +10,7 @@ const Admin = require('./models/Admin');
 
 const { requireAuth, checkUser, requireAuthAdmin, checkAdmin } = require('./middleware/authMiddleware');
 const authRoutes = require('./routes/authRoutes');
+const { ResumeToken } = require('mongodb');
 
 const app = express();
 dotenv.config({path: './.env'});
@@ -95,10 +96,12 @@ app.post('/demo',checkUser, (req,res)=>{
       }
       else{
         console.log(docs);
-        res.send(s);
+        res.send(d);
       }
     });
   });
+
+
 
 });
 

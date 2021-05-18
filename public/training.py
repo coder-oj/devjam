@@ -3,15 +3,15 @@ import sys
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
-from sklearn import tree
+from sklearn import tree, svm
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import confusion_matrix,accuracy_score
-import pickle
 
 
 #Loading Dataset
 df = pd.read_csv("https://raw.githubusercontent.com/coder-oj/devjam/main/public/mldata.csv")
 
-# print("Dataset Loaded successfully!")
+
 # Number Encoding
 cols = df[["self-learning capability?", "Extra-courses did","Taken inputs from seniors or elders", "worked in teams ever?", "Introvert"]]
 for i in cols:
@@ -56,8 +56,17 @@ x_train, x_test, y_train, y_test = train_test_split(df_train_x, df_train_y, test
 
 
 # Decision Tree Classifier
-clf = tree.DecisionTreeClassifier()
-clf = clf.fit(x_train, y_train)
+clf1 = tree.DecisionTreeClassifier()
+clf1 = clf1.fit(x_train, y_train)
+
+# SVM Classifier
+clf2 = svm.SVC()
+clf2 = clf2.fit(x_train, y_train)
+
+
+#Random Forest Classifier
+clf3 = RandomForestClassifier(n_estimators=100) 
+clf3 = clf3.fit(x_train, y_train)
 
 
 # feed = df[['Logical quotient rating', 'coding skills rating', 'hackathons', 'public speaking points', 'self-learning capability?','Extra-courses did', 
@@ -69,10 +78,11 @@ clf = clf.fit(x_train, y_train)
 # Network Security Engineer
 # print(clf.predict([['1','1','1','1','1','0','1', '2', '1', '1', '0', '3','3', 
 #                     '4','4','2','7','0','1','0','1']])) 
-print(clf.predict([[sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], sys.argv[6], sys.argv[7], sys.argv[8], sys.argv[9], sys.argv[10], sys.argv[11], sys.argv[12], sys.argv[13], sys.argv[14], sys.argv[15], sys.argv[16], sys.argv[17], sys.argv[18], sys.argv[19],sys.argv[20],sys.argv[21] ]])) 
 
-file = open('model.pkl', 'wb') 
-pickle.dump(clf, file)
-file.close()
+userdata = [[sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], sys.argv[6], sys.argv[7], sys.argv[8], sys.argv[9], sys.argv[10], sys.argv[11], sys.argv[12], sys.argv[13], sys.argv[14], sys.argv[15], sys.argv[16], sys.argv[17], sys.argv[18], sys.argv[19],sys.argv[20],sys.argv[21] ]]
 
-# print("Model Building Done!")
+print("Prediction By Decision Tree = " , clf1.predict(userdata)) 
+print("Prediction By SVM = " , clf2.predict(userdata)) 
+print("Prediction By Random Forest = " , clf3.predict(userdata)) 
+
+
