@@ -1,13 +1,67 @@
 <%- include('partials/header'); -%>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Dashboard</h1>
-</body>
-</html>
+<div class="row">
+<div class="col-md-3">
+    <div class="row justify-content-center">
+        <div class="col-md-6 "><img src="assets/img/profile.png" alt="profile pic" style="width:100%; border-radius: 90px;"></div>
+    </div>
+    <div class="row justify-content-center" >
+        <div class="col-md-12 " data-aos="fade-right"><h4 style="color:rgb(252, 113, 58); text-align:center;"><%= user.name %></h4></div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-12 " data-aos="fade-right"><h5 style="text-align:center;"><a href="mailto:<%= user.email %>"><%= user.email %></a></h5></div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-12" data-aos="fade-right"><h5 style="text-align:center;"><%= user.degree %> Student (<%= user.gradyear %>)</h5></div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-12 " data-aos="fade-right"><h5 style="text-align:center;">Studying in <%= user.college %></h5></div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-12 " data-aos="fade-right"><h5 style="text-align:center;"><a href="https://<%= user.linkedin %>"><%= user.linkedin %></a></h5></div>
+    </div>
+</div>
+
+<div class="col-md-9">
+    <% if(user.result.length === 0){ %>
+        <h5 style="margin-top:150px;"><a href="/main-form">Click Here</a> to assess yourself, and get your job predicted</h5>
+    <% }else{ %>
+    <% user.result.forEach((element)=>{ %>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="assets/img/jobs-img/<%=element.s1%>.jpg" alt="Card image cap">
+                    <div class="card-body">
+                      <h5 class="card-title"><%= element.s1 %></h5>
+                      <h6 class="card-subtitle mb-2 text-muted"><%= element.date %></h6>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    </div>
+                </div>
+            </div> 
+            <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="assets/img/jobs-img/<%=element.s2%>.jpg" alt="Card image cap">
+                    <div class="card-body">
+                      <h5 class="card-title"><%= element.s2 %></h5>
+                      <h6 class="card-subtitle mb-2 text-muted"><%= element.date %></h6>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    </div>
+                </div>
+            </div> 
+            <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="assets/img/jobs-img/<%=element.s3%>.jpg" alt="Card image cap">
+                    <div class="card-body">
+                      <h5 class="card-title"><%= element.s3 %></h5>
+                      <h6 class="card-subtitle mb-2 text-muted"><%= element.date %></h6>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    </div>
+                </div>
+            </div> 
+        </div>
+        
+    <% }); }%>
+
+</div>
+
+</div>
+<%- include('partials/footer'); -%>
