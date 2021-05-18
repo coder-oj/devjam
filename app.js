@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 const User = require('./models/User');
 const Admin = require('./models/Admin');
+//const Jobrole = require('./models/jobrole');
 
 const { requireAuth, checkUser, requireAuthAdmin, checkAdmin } = require('./middleware/authMiddleware');
 const authRoutes = require('./routes/authRoutes');
@@ -29,6 +30,8 @@ mongoose.connect(process.env.DATABASE_URL , {useNewUrlParser: true, useCreateInd
   console.log('Connection Successful');
 }).catch((err) => { console.log(err);});
 
+
+
 //middleware
 app.get('/', checkUser);
 app.get('/main-form', checkUser);
@@ -46,8 +49,8 @@ app.get('/adminhome', requireAuthAdmin, (req, res) => res.render('adminhome'));
 app.use(authRoutes);
 
 
-app.post('/demo',(req,res)=>{
-
+app.post('/demo',checkUser, (req,res)=>{
+  //console.log(res.locals.user);
   let spwan = require('child_process').spawn;
   console.log(req.body);
   var q1 = req.body.q1;
@@ -78,7 +81,7 @@ app.post('/demo',(req,res)=>{
   // var process = spwan('py',['./abc.py', userdata]
 
   );
-  // console.log(res.locals.user.id);
+   console.log('id'+ res.locals.user._id);
   console.log(Date.now())
   process.stdout.on('data',(data)=>{
      d = data.toString();
@@ -86,7 +89,7 @@ app.post('/demo',(req,res)=>{
     for(var i = 2; i < (d.length-4);i++){
       s += d[i];
     }
-    User.find((err,docs)=>{
+    User.find(res.locals.user , (err,docs)=>{
       if(err){
         console.log(err);
       }
