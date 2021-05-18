@@ -18,7 +18,9 @@
     </div>
 
 </section><!-- End Hero -->
-    
+<% if(s){ %>
+    <h1> <%= s %> </h1>
+ <% } %>    
     
     <form action="/demo" method="POST">
         Name : <input type="text" name="fname"> 
