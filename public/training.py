@@ -4,14 +4,14 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn import tree, svm
-from xgboost import XGBClassifier
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import confusion_matrix,accuracy_score
-# import pickle
+
 
 #Loading Dataset
 df = pd.read_csv("https://raw.githubusercontent.com/coder-oj/devjam/main/public/mldata.csv")
 
-# print("Dataset Loaded successfully!")
+
 # Number Encoding
 cols = df[["self-learning capability?", "Extra-courses did","Taken inputs from seniors or elders", "worked in teams ever?", "Introvert"]]
 for i in cols:
@@ -63,9 +63,11 @@ clf1 = clf1.fit(x_train, y_train)
 clf2 = svm.SVC()
 clf2 = clf2.fit(x_train, y_train)
 
-# XG Boost
-clf3 = XGBClassifier()
+
+#Random Forest Classifier
+clf3 = RandomForestClassifier(n_estimators=100) 
 clf3 = clf3.fit(x_train, y_train)
+
 
 # feed = df[['Logical quotient rating', 'coding skills rating', 'hackathons', 'public speaking points', 'self-learning capability?','Extra-courses did', 
 #            'Taken inputs from seniors or elders', 'worked in teams ever?', 'Introvert', 'reading and writing skills', 'memory capability score',  
@@ -81,10 +83,6 @@ userdata = [[sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], sy
 
 print("Prediction By Decision Tree = " , clf1.predict(userdata)) 
 print("Prediction By SVM = " , clf2.predict(userdata)) 
-print("Prediction By XG BOOST = " , clf3.predict(userdata)) 
+print("Prediction By Random Forest = " , clf3.predict(userdata)) 
 
-# file = open('model.pkl', 'wb') 
-# pickle.dump(clf, file)
-# file.close()
 
-# print("Model Building Done!")
