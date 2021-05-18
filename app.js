@@ -4,6 +4,8 @@ const ejs = require('ejs');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
+const User = require('./models/User');
+const Admin = require('./models/Admin');
 
 const { requireAuth, checkUser, requireAuthAdmin, checkAdmin } = require('./middleware/authMiddleware');
 const authRoutes = require('./routes/authRoutes');
@@ -30,6 +32,7 @@ mongoose.connect(process.env.DATABASE_URL , {useNewUrlParser: true, useCreateInd
 //middleware
 app.get('/', checkUser);
 app.get('/main-form', checkUser);
+app.post('/demo', checkUser);
 app.get('/dashboard', checkUser);
 app.get('/adminhome', checkAdmin);
 
@@ -58,8 +61,10 @@ app.post('/demo',(req,res)=>{
   var q9 = req.body.q9;
   var q10 = req.body.q10;
   var q11 = req.body.q11; 
-  var q12 = req.body.q12;
-  var q13 = req.body.q13;
+  var q12a = req.body.q12a;
+  var q12b = req.body.q12b;
+  var q13a = req.body.q13a;
+  var q13b = req.body.q13b;
   var q14 = req.body.q14;
   var q15 = req.body.q15;
   var q16 = req.body.q16;
@@ -67,15 +72,29 @@ app.post('/demo',(req,res)=>{
   var q18 = req.body.q18;
   var q19 = req.body.q19;
   var process = spwan('py',['./public/training.py',q1, q2, q3, q4, q5, q6, q7, q8, q9, q10,
-                q11, q12, q13, q14, q15, q16, q17, q18, q19 ]
+                q11, q12a, q12b, q13a, q13b, q14, q15, q16, q17, q18, q19 ]
 
   // userdata = req.body;
   // var process = spwan('py',['./abc.py', userdata]
 
   );
+  // console.log(res.locals.user.id);
+  console.log(Date.now())
   process.stdout.on('data',(data)=>{
-    d = data.toString();
-    res.send(d);
+     d = data.toString();
+     var s="";
+    for(var i = 2; i < (d.length-4);i++){
+      s += d[i];
+    }
+    User.find((err,docs)=>{
+      if(err){
+        console.log(err);
+      }
+      else{
+        console.log(docs);
+        res.send(s);
+      }
+    });
   });
 
 });
