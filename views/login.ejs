@@ -2,7 +2,7 @@
 <!---------Registration---------------
   ------------------------------------->
 <div class="container signup" id="sign">
-  <form action="/signup" method="POST">
+  <form>
     <div class="row">
       <div class="col-md-4 offset-md-4">
         <h4 style="font-weight: 700; text-align: center;">REGISTRATION</h4>
@@ -95,7 +95,7 @@
 <!---------User Login---------------
   ------------------------------------->
   <div class="container login" id="log">
-    <form action="/login" method="POST">
+    <form>
       <div class="row">
         <div class="col-md-9 offset-md-1">
           <h4 style="font-weight: 700; text-align: center;">MEMBER LOGIN</h4>
@@ -142,7 +142,7 @@
   </div>
   
 <script>
-  const form = document.querySelector('form');
+  const form = document.querySelectorAll('form');
   const emailError = document.querySelectorAll('.email.error');
   const passwordError = document.querySelectorAll('.password.error');
 
@@ -175,7 +175,8 @@
         passwordError[1].textContent = data.errors.password;
       }
       if (data.user) {
-        location.assign('/');
+        location.assign('/dashboard');
+        //location.reload();
       }
     } catch (error) {
       console.log(error);
@@ -209,13 +210,14 @@
         passwordError[1].textContent = data.errors.password;
       }
       if (data.user) {
-        location.assign('/');
+        location.assign('/dashboard');
       }
     } catch (error) {
       console.log(error);
     }
   })
 </script>
+
 <script>
   function toggle(a, b) {
     document.getElementById(a).style.display = "block";
