@@ -67,6 +67,12 @@ const createToken = (id) => {
     });
 }
 
+const createTokenAdmin = (id) => {
+    return jwt.sign({ id }, 'secret string admin', {
+        expiresIn: maxAge
+    });
+}
+
 module.exports.login_get = (req,res) => {
     res.render('login');
 }
@@ -98,6 +104,7 @@ module.exports.signup_post =async (req,res) => {
 }
 
 module.exports.login_post = async (req,res) => {
+    res.clearCookie('jwtadm');
     const { email, password } = req.body;
     try {
         const user = await User.login(email,password);
@@ -112,10 +119,11 @@ module.exports.login_post = async (req,res) => {
 }
 
 module.exports.adminlogin_post = async (req,res) => {
+    res.clearCookie('jwt');
     const { email, password } = req.body;
     try {
         const admin = await Admin.login(email,password);
-        const token = createToken(admin._id);
+        const token = createTokenAdmin(admin._id);
         res.cookie('jwtadm',token, { httpOnly: true, maxAge: maxAge*1000});
         res.status(200).json({admin: admin._id});
     } 
@@ -129,7 +137,7 @@ module.exports.adminsignup_post = async (req,res) => {
     const { name, email, password, organization, orgwebsite, linkedin } = req.body;
     try {
         const admin = await Admin.create({ name, email, password, organization, orgwebsite, linkedin });
-        const token = createToken(admin._id);
+        const token = createTokenAdmin(admin._id);
         res.cookie('jwtadm',token, { httpOnly: true,maxAge: maxAge*1000});
         res.status(201).json({admin: admin._id});
     } 

@@ -22,9 +22,9 @@ const requireAuth = (req, res, next) =>{
 
 const requireAuthAdmin = (req, res, next) =>{
     const token = req.cookies.jwtadm;
-    //check json web token exists & is verfied
+    //check json web token exists & is verified
     if (token) {
-        jwt.verify(token, 'secret string', (err, decodedToken)=>{
+        jwt.verify(token, 'secret string admin', (err, decodedToken)=>{
             if(err) {
                 console.log(err.message);
                 res.redirect('/adminlogin');
@@ -67,7 +67,7 @@ const requireAuthAdmin = (req, res, next) =>{
     const token = req.cookies.jwtadm;
 
     if(token) {
-       jwt.verify(token, 'secret string', async (err, decodedToken)=>{
+       jwt.verify(token, 'secret string admin', async (err, decodedToken)=>{
            if(err) {
                console.log(err.message);
                res.locals.admin = null;
