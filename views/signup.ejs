@@ -10,18 +10,21 @@
     <title>Signup page</title>
 </head>
 <body>
-    <h1>Sign up</h1>
-    <div class="container-md">
-    <form class="row g-3" >
+    
+    <div class="container signup">
+    <form action="/signup" method="POST">
+      <div class="row">
+        <h4 style="font-weight: 700; text-align: center;">MEMBER LOGIN</h4>
+      </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <label for="name" class="form-label">Name</label>
                 <input type="text" class="form-control" id="name" name="name" required>
               </div>
         </div>
         
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-6">
                 <label for="validationDefaultUsername" class="form-label">E-mail</label>
                 <div class="input-group">
                   <span class="input-group-text" id="inputGroupPrepend2"><i class="fas fa-at"></i></span>
@@ -29,7 +32,7 @@
                   <div class="email error"></div>
                 </div>
               </div>
-              <div class="col-md-3">
+              <div class="col-md-6">
                 <label for="password" class="form-label">Password</label>
                 <div class="input-group">
                   <span class="input-group-text" id="inputGroupPrepend2"><i class="fas fa-key"></i></span>
@@ -40,7 +43,7 @@
         </div>
         
         <div class="row">
-            <div class="col-md-2">
+            <div class="col-md-4">
                 <label for="degree" class="form-label">Degree</label>
                 <select class="form-select" name="degree" id="degree" required>
                   <option selected disabled value="">Choose...</option>
@@ -50,18 +53,18 @@
                   <option value="Bsc(cs)">Bsc(CS)</option>
                 </select>
               </div>
-              <div class="col-md-2">
+              <div class="col-md-4">
                   <label for="college" class="form-label">College</label>
                   <input type="text" class="form-control" name="college" id="college" required>
               </div>
-              <div class="col-md-2">
+              <div class="col-md-4">
                   <label for="gradyear" class="form-label">Graduation Year</label>
                   <input type="text" class="form-control" name="gradyear" id="gradyear" required>
               </div>
         </div>
         
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-12">
                 <label for="linkedin" class="form-label">LinkedIn</label>
                 <div class="input-group">
                   <span class="input-group-text" id="linkedin"><i class="fab fa-linkedin"></i></span>
@@ -69,7 +72,7 @@
                 </div>
             </div>
         </div>
-       
+        <div class="row">
         <div class="col-12">
           <div class="form-check">
             <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
@@ -78,9 +81,17 @@
             </label>
           </div>
         </div>
-        <div class="col-12">
-          <button class="btn btn-primary" >Submit form</button>
+      </div>
+        <div class="row justify-content-center">
+        <div class="col-2">
+          <button class="btn btn-primary" >Register</button>
         </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-6">
+          <p style="display:inline;">Have already an account? </p><a href="/login">Login</button>
+        </div>
+      </div>
       </form>
     </div>
     <script>

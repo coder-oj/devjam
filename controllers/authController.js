@@ -89,6 +89,10 @@ module.exports.signup_get = (req,res) => {
     res.render('signup');
 }
 
+module.exports.dashboard_get = (req,res) => {
+    res.render('dashboard');
+}
+
 module.exports.signup_post =async (req,res) => {
       const { name, email, password, degree, college, gradyear, linkedin } = req.body;
       try {
@@ -137,9 +141,9 @@ module.exports.adminsignup_post = async (req,res) => {
     const { name, email, password, organization, orgwebsite, linkedin } = req.body;
     try {
         const admin = await Admin.create({ name, email, password, organization, orgwebsite, linkedin });
-        const token = createTokenAdmin(admin._id);
-        res.cookie('jwtadm',token, { httpOnly: true,maxAge: maxAge*1000});
-        res.status(201).json({admin: admin._id});
+        //const token = createTokenAdmin(admin._id);
+        //res.cookie('jwtadm',token, { httpOnly: true,maxAge: maxAge*1000});
+        //res.status(201).json({admin: admin._id});
     } 
     catch (error) {
       const errors = handleErrorsAdmin(error);

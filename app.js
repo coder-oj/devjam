@@ -33,6 +33,7 @@ mongoose.connect(process.env.DATABASE_URL , {useNewUrlParser: true, useCreateInd
 app.get('/', checkUser);
 app.get('/main-form', checkUser);
 app.post('/demo', checkUser);
+app.get('/dashboard', checkUser);
 app.get('/adminhome', checkAdmin);
 
 //routes

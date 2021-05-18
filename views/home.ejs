@@ -1,21 +1,78 @@
 <%- include('partials/header'); -%>
-<!-- ======= Hero Section ======= -->
-<section id="hero">
+  <!-- ======= Hero Section ======= -->
+  <section id="hero">
 
     <div class="container">
       <div class="row d-flex align-items-center">
-      <div class="col-lg-6 py-5 py-lg-0 order-2 order-lg-1" data-aos="fade-right">
-        <h1>Get your Career Destiny predict</h1>
-        <h2>On the basis of your Technical Skills and Interest</h2>
-        <% if (!user) { %>
-        <a href="/signup" class="btn-get-started scrollto">Register Yourself</a>
-        <% } %>
-      </div>
-      <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="fade-left">
-        <img src="assets/img/career2.png" class="img-fluid" alt="">
+        <div class="col-lg-6 py-5 py-lg-0 order-2 order-lg-1" data-aos="fade-right">
+          <h1>Get your Career Destiny predict</h1>
+          <h2>On the basis of your Technical Skills and Interest</h2>
+          <% if (!user) { %>
+            <a onclick="toggle('sign', 'log');" class="btn-get-started scrollto">Register Yourself</a>
+            <% } %>
+        </div>
+        <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="fade-left">
+          <img src="assets/img/career2.png" class="img-fluid" alt="">
+        </div>
       </div>
     </div>
+
+  </section><!-- End Hero -->
+
+  <!-- ======= About Section ======= -->
+  <section id="about" class="about section-bg">
+    <div class="container">
+      <div class="section-title">
+        <h2 data-aos="fade-in">About Us</h2>
+        <p data-aos="fade-in">
+          All of us at some point or the other have had made a decision regarding our career and thus understand how
+          overwhelming and confusing it can get. The plethora of options available to pick from also adds to the
+          difficulty of choosing one.
+          Especially we as CS students have faced the dilemma of choosing one specialization for our career.
+          Moreover, the recruiters are also faced with the task of allocating a suitable job role to an applicant,
+          after recruiting. </p>
+      </div>
+      
+        <div class="row content justify-content-center">
+         
+
+        
+        <div class="image col-xl-5 d-flex align-items-stretch justify-content-center justify-content-lg-start" data-aos="fade-right"></div>
+        <div class="col-xl-7 pl-0 pl-lg-5 pr-lg-1 d-flex align-items-stretch">
+          <div class="flex-column justify-content-center">
+            <div class="row">
+              <div class="col-md-6 icon-box" data-aos="fade-up">
+                <i class="bx bx-receipt"></i>
+                <h4>Job Prediction</h4>
+                <p>We ask you few questions about your Interest and Technical Skills, and on that basis we predict best
+                  suited CS Geek Profile for you</p>
+              </div>
+              <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="100">
+                <i class="bx bx-cube-alt"></i>
+                <h4>Ullamco laboris nisi</h4>
+                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt</p>
+              </div>
+              <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="200">
+                <i class="bx bx-images"></i>
+                <h4>Labore consequatur</h4>
+                <p>Aut suscipit aut cum nemo deleniti aut omnis. Doloribus ut maiores omnis facere</p>
+              </div>
+              <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="300">
+                <i class="bx bx-shield"></i>
+                <h4>Beatae veritatis</h4>
+                <p>Expedita veritatis consequuntur nihil tempore laudantium vitae denat pacta</p>
+              </div>
+            </div>
+          </div><!-- End .content-->
+        </div>
+      </div>
+
     </div>
+  </section><!-- End About Section -->
+
+  <!-- ======= Features Section ======= -->
+  <section id="features" class="features section-bg">
+    <div class="container">
 
 </section><!-- End Hero -->
 <% if(s){ %>
@@ -38,3 +95,32 @@
   <script src="assets/js/main.js"></script>
 </body>
 </html>
+      <div class="section-title">
+        <h2 data-aos="fade-in">Features</h2>
+        <p data-aos="fade-in">Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum
+          quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea.
+          Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+      </div>
+
+      <div class="row content">
+        <div class="col-md-5" data-aos="fade-right">
+          <img src="assets/img/features-4.svg" class="img-fluid" alt="">
+        </div>
+        <div class="col-md-7 pt-4" data-aos="fade-left">
+          <h3>Voluptatem dignissimos provident quasi corporis voluptates sit assumenda.</h3>
+          <p class="fst-italic">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore
+            magna aliqua.
+          </p>
+          <ul>
+            <li><i class="bi bi-check"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
+            <li><i class="bi bi-check"></i> Duis aute irure dolor in reprehenderit in voluptate velit.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End Features Section -->
+  <%- include('login'); -%>
+  <%- include('partials/footer'); -%>
