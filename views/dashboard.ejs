@@ -33,7 +33,8 @@
                 <div class="col-md-3">
                     <h5><%= element.date %></h5>
                 </div>
-                <div class="col-md-9"><hr style="height: 4px; color: black;"/></div>
+                <div class="col-md-6"><hr style="height: 4px; color: black;"/></div>
+                <div class="col-md-3"><a onclick="show()"> My Response</a></div>
             </div>
             <div class="row">
                 <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
@@ -43,6 +44,7 @@
                           <h5 class="card-title" style="font-weight: 700;"><%= element.s1 %></h5>
                           <h6 class="card-subtitle mb-2 text-muted"><%= element.date %></h6>
                           <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                          <h6 style="font-size: 13px; color: rgba(0, 0, 0, 0.5);">Decision Tree Classifier</h6>
                         </div>
                     </div>
                 </div> 
@@ -53,6 +55,7 @@
                           <h5 class="card-title"  style="font-weight: 700;"><%= element.s2 %></h5>
                           <h6 class="card-subtitle mb-2 text-muted"><%= element.date %></h6>
                           <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                          <h6 style="font-size: 13px; color: rgba(0, 0, 0, 0.5);">Support Vector Machine Classifier</h6>
                         </div>
                     </div>
                 </div> 
@@ -63,11 +66,57 @@
                           <h5 class="card-title" style="font-weight: 700;"><%= element.s3 %></h5>
                           <h6 class="card-subtitle mb-2 text-muted"><%= element.date %></h6>
                           <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                          <h6 style="font-size: 13px; color: rgba(0, 0, 0, 0.5);">Random Forest Classifier</h6>
                         </div>
                     </div>
                 </div> 
             </div>
-            
+            <div class="row response">
+                <div class="col-md-4">
+                    <h6>Logical Quotient Rating: <%= element.response.q1 %> </h6>
+                    <h6>Coding Skills Rating: <%= element.response.q2 %> </h6>
+                    <h6>Hackathons Attended: <%= element.response.q3 %> </h6>
+                    <h6>Public Speaking points: <%= element.response.q4 %> </h6>
+                    <h6>Self Learning Capability: <%= (element.response.q5)?"Yes":"No" %> </h6>
+                    <h6>Extra Courses did?: <%= (element.response.q6)?"Yes":"No" %> </h6>
+                    <h6>Reading and Writing Skills: <% if(parseInt(element.response.q10) == 0){ %>
+                        <% str = "Poor"; %>
+                        <% }else if(parseInt(element.response.q9) == 1){ %>
+                        <% str = "Medium"; %>
+                        <% }else{ %>
+                        <% str = "Excellent"; %>
+                        <% } %>
+                        <%= str %> 
+                    </h6>
+                </div><% var str = "" %>
+                <div class="col-md-4">
+                    <h6>Memory Capability: <% if(parseInt(element.response.q11) == 0){ %>
+                        <% str = "Poor"; %>
+                        <% }else if(parseInt(element.response.q9) == 1){ %>
+                        <% str = "Medium"; %>
+                        <% }else{ %>
+                        <% str = "Excellent"; %>
+                        <% } %>
+                        <%= str %> 
+                    </h6>
+                    <h6>Taken inputs from Seniors?: <%= (element.response.q7)?"Yes":"No" %> </h6>
+                    <h6>Worked in team ever?: <%= (element.response.q8)?"Yes":"No" %> </h6>
+                    <h6>Introvert?: <%= (parseInt(element.response.q9))?"Yes":"No" %> </h6>
+                    <h6>Hard Worker: <%= (parseInt(element.response.q12a))?"Yes":"No" %> </h6>
+                    <h6>Smart Worker: <%= (element.response.q12b)?"Yes":"No" %> </h6>
+                    <h6>Management: <%= (element.response.q13a)?"Yes":"No" %> </h6>
+                    
+                </div>
+                <div class="col-md-4">
+                    <h6>Technical: <%= (element.response.q13b)?"Yes":"No" %> </h6>
+                    <h6>Interested Subject: <%= element.response.q14 %> </h6>
+                    <h6>Interested Type of Books: <%= element.response.q15 %> </h6>
+                    <h6>Certification: <%= element.response.q16 %> </h6>
+                    <h6>Workshop: <%= element.response.q17 %> </h6>
+                    <h6>Type of company want to settle in?: <%= element.response.q18 %> </h6>
+                    <h6>Interested Career Area: <%= element.response.q19 %> </h6>
+                </div>
+            </div>
         </div>
         
     <% }); }%>
