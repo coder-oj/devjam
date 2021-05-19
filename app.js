@@ -102,8 +102,9 @@ app.post('/demo',checkUser, (req,res)=>{
    
     var prediction = {
       s1: str[0].slice(2,str[0].length-2),
-      s2 : str[1].slice(2,str[1].length-2),
+      s2: str[1].slice(2,str[1].length-2),
       s3: str[2].slice(2,str[2].length-2),
+      response: {q1: q1, q2: q2, q3: q3, q4: q4, q5: q5, q6: q6, q7: q7, q8: q8, q9: q9, q10: q10, q11: q11, q12a: q12a, q12b: q12b, q13a: q13a, q13b: q13b, q14: q14, q15: q15, q16: q16, q17: q17, q18: q18, q19: q19},
       date:date
     }
     if(prediction.s1 === "Software Quality Assurance (QA) / Testing"){
