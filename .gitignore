@@ -1,2 +1,5 @@
 node_modules
 .env
+model1.pkl
+model2.pkl
+model3.pkl
