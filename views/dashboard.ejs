@@ -22,19 +22,26 @@
         
     </div>
 </div>
-<% var count=0; %>
+<% const subjects = ['Software Engineering', 'IOT', 'cloud computing', 'programming', 'networks', 'Computer Architecture', 'data engineering', 'hacking', 'Management', 'parallel computing']; %>
+<% const books = ["Guide","Health","Self help","Horror","Biographies","Science fiction","Childrens","Satire","Autobiographies","Prayer books","Fantasy","Journals","Trilogy","Anthology","Encyclopedias","Drama","Mystery","History","Dictionaries","Science","Religion-Spirituality","Diaries","Poetry","Action and Adventure","Cookbooks","Travel","Art","Comics","Series","Math","Romance"]; %>
+<% const certificate = ["R Programming","Information Security","Shell Programming","Machine Learning","Full Stack","Hadoop","Python","Distro Making","App Development"]; %> 
+<% const workshops = ["Database Security","Web Technologies","System Designing","Hacking","Testing","Data Science","Game Development","Cloud Computing"]; %>
+<% const company = ["Service Based","Web Services","BPA","Testing and Maintainance Services","Product Based","Finance","Cloud Services","Product Development","Sales and Marketing","SAaS Services"]; %>
+<% const career = ["System Developer","Security","Business Process Analyst","Developer","Testing","Cloud Computing"]; %>
+<% var count=-1; %>
 <div class="col-md-9 effect">
     <% if(user.result.length === 0){ %>
         <h5 style="margin-top:150px;"><a href="/main-form">Click Here</a> to assess yourself, and get your job predicted</h5>
     <% }else{ %>
     <% user.result.reverse().forEach((element)=>{ %>
+        <% count++; %>
         <div class="row">
-            <div class="row">
+            <div class="row" data-aos="fade-up" data-aos-delay="100">
                 <div class="col-md-3">
                     <h5><%= element.date %></h5>
                 </div>
-                <div class="col-md-9"><hr style="height: 4px; color: black;"/></div>
-                
+                <div class="col-md-7"><hr style="height: 4px; color: black;"/></div>
+                <div class="col-md-2"><a id='hide<%= count%>' style="font-size: large;" onclick="show('d<%= count%>', 'hide<%= count%>');">My Response <i class="fas fa-eye-slash fa-lg"></i></a></div>
             </div>
             <div class="row">
                 <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
@@ -71,7 +78,7 @@
                     </div>
                 </div> 
             </div>
-            <div class="row response" id='demo'>
+            <div class="row response" id='d<%= count%>' style="visibility: hidden; height: 0px;" data-aos="fade-right" data-aos-delay="100">
                 <div class="col-md-4">
                     <h6>Logical Quotient Rating: <%= element.response.q1 %> </h6>
                     <h6>Coding Skills Rating: <%= element.response.q2 %> </h6>
@@ -89,7 +96,7 @@
                         <%= str %> 
                     </h6>
                 </div><% var str = "" %>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <h6>Memory Capability: <% if(parseInt(element.response.q11) == 0){ %>
                         <% str = "Poor"; %>
                         <% }else if(parseInt(element.response.q9) == 1){ %>
@@ -107,14 +114,14 @@
                     <h6>Management: <%= (element.response.q13a)?"Yes":"No" %> </h6>
                     
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-5">
                     <h6>Technical: <%= (element.response.q13b)?"Yes":"No" %> </h6>
-                    <h6>Interested Subject: <%= element.response.q14 %> </h6>
-                    <h6>Interested Type of Books: <%= element.response.q15 %> </h6>
-                    <h6>Certification: <%= element.response.q16 %> </h6>
-                    <h6>Workshop: <%= element.response.q17 %> </h6>
-                    <h6>Type of company want to settle in?: <%= element.response.q18 %> </h6>
-                    <h6>Interested Career Area: <%= element.response.q19 %> </h6>
+                    <h6>Interested Subject: <%= subjects[parseInt(element.response.q14)] %> </h6>
+                    <h6>Interested Type of Books: <%= books[parseInt(element.response.q15)] %> </h6>
+                    <h6>Certification: <%= certificate[parseInt(element.response.q16)] %> </h6>
+                    <h6>Workshop: <%= workshops[parseInt(element.response.q17)] %> </h6>
+                    <h6>Type of company want to settle in: <%= company[parseInt(element.response.q18)] %> </h6>
+                    <h6>Interested Career Area: <%= career[parseInt(element.response.q19)] %> </h6>
                 </div>
             </div>
         </div>
@@ -124,6 +131,23 @@
 </div>
 
 </div>
+<script> 
+    function show(ob, cur){
+        var resp = document.getElementById(ob);
+        var curr = document.getElementById(cur);
+        if(resp.style.visibility === 'hidden'){
+            resp.style.visibility = 'visible';
+            resp.style.height = 'auto';
+            curr.innerHTML = 'My Response <i class="fas fa-eye fa-lg"></i>';
+        }  
+        else{
+            resp.style.visibility = 'hidden';
+            resp.style.height = '0px';
+            curr.innerHTML = 'My Response <i class="fas fa-eye-slash fa-lg"></i>';
+        }
+        
+    };
+</script>
 <%- include('partials/footer'); -%>
 
 
