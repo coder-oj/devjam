@@ -27,7 +27,7 @@
     <% if(user.result.length === 0){ %>
         <h5 style="margin-top:150px;"><a href="/main-form">Click Here</a> to assess yourself, and get your job predicted</h5>
     <% }else{ %>
-    <% user.result.forEach((element)=>{ %>
+    <% user.result.reverse().forEach((element)=>{ %>
         <div class="row">
             <div class="row">
                 <div class="col-md-3">
