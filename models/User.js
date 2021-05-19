@@ -59,5 +59,14 @@ userSchema.statics.login = async function(email,password) {
     throw Error('Incorrect Email!');
 }
 
+userSchema.statics.findbyrole = async function(role) {
+    const results = await this.find({'result': { $elemMatch: {$or: [{'s1':role}, {'s2':role}, {'s3':role}]}}});
+    if(results) {
+        //console.log(results);
+        return results;
+    }
+    throw Error('Errrrrrror!');
+}
+
 const User = mongoose.model("users", userSchema);
 module.exports = User;

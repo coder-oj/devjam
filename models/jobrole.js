@@ -88,6 +88,6 @@ const jobroleSchema = new mongoose.Schema({
     }
     }
      
-    createDocument();
+    //createDocument();
 
 module.exports = jobroles;
