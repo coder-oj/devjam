@@ -29,6 +29,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 //Connection to Atlas
 mongoose.connect(process.env.DATABASE_URL , {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true, useFindAndModify: false}).then(() => {
   console.log('Connection Successful');
+
 }).catch((err) => { console.log(err);});
 
 
@@ -83,22 +84,51 @@ app.post('/demo',checkUser, (req,res)=>{
 
   );
    console.log('id'+ res.locals.user._id);
-  console.log(Date.now())
+  
   process.stdout.on('data',(data)=>{
-     d = data.toString();
-     var s="";
-    for(var i = 2; i < (d.length-4);i++){
-      s += d[i];
+    d = data.toString();
+    var str = d.split("\r\n");
+    str.pop();
+    
+
+    // to get current date
+    // var todayTime = new Date();
+    // var month = todayTime .getMonth() + 1;
+    // var day = todayTime .getDate();
+    // var year = todayTime .getFullYear();
+    var date = Date().substring(4,21) + " IST";
+    
+   
+    var prediction = {
+      s1: str[0].slice(2,str[0].length-2),
+      s2 : str[1].slice(2,str[1].length-2),
+      s3: str[2].slice(2,str[2].length-2),
+      date:date
     }
-    User.find(res.locals.user , (err,docs)=>{
-      if(err){
-        console.log(err);
-      }
-      else{
-        console.log(docs);
-        res.send(d);
-      }
-    });
+    if(prediction.s1 === "Software Quality Assurance (QA) / Testing"){
+      prediction.s1 = "Software Quality Assurance";
+    }
+    if(prediction.s2 === "Software Quality Assurance (QA) / Testing"){
+      prediction.s2 = "Software Quality Assurance";
+    }
+    if(prediction.s3 === "Software Quality Assurance (QA) / Testing"){
+      prediction.s3 = "Software Quality Assurance";
+    }
+   
+  
+    User.updateOne({'_id':res.locals.user.id},
+      {$push : {'result':prediction}},(err,docs)=>{
+
+        if(err){
+          console.log("abc");
+          console.log(err);
+        }
+        else{
+          res.send("PRAKHAR IS OPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP! surprise mf!");
+        }
+      });
+
+
   });
 
 
@@ -109,3 +139,5 @@ const port = 8000;
 app.listen(port, () =>{
     console.log(`Server is running on localhost ${port}`);
 });
+
+
