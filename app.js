@@ -47,6 +47,7 @@ app.get('/', (req,res) => {
 });
 app.get('/main-form', requireAuth, (req, res) => res.render('main-form'));
 app.get('/adminhome', requireAuthAdmin, (req, res) => res.render('adminhome'));
+app.get('/dashboard', requireAuth, (req, res) => res.render('dashboard'));
 
 app.use(authRoutes);
 
@@ -125,7 +126,7 @@ app.post('/demo',checkUser, (req,res)=>{
           console.log(err);
         }
         else{
-          res.send("PRAKHAR IS OPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP! surprise mf!");
+          res.redirect('/dashboard');
         }
       });
 
