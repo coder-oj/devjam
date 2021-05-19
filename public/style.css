@@ -589,3 +589,9 @@ label{
   cursor: pointer;
   
 }
+.response{
+  background-color: #ff7979;
+  color: white;
+  margin-top: 10px ;
+  box-shadow: 0px 5px 10px 10px rgba(138, 43, 226, 0.3);
+}
