@@ -6,6 +6,7 @@ from sklearn.model_selection import train_test_split
 from sklearn import tree, svm
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import confusion_matrix,accuracy_score
+import pickle
 
 
 #Loading Dataset
@@ -75,17 +76,22 @@ clf3 = clf3.fit(x_train, y_train)
 #            'workshops_code', 'Type of company want to settle in?_code',  'interested career area _code',
 #              'Suggested Job Role']]
 
-# Network Security Engineer
-# print(clf.predict([['1','1','1','1','1','0','1', '2', '1', '1', '0', '3','3', 
-#                     '4','4','2','7','0','1','0','1']])) 
 
-userdata = [[sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], sys.argv[6], sys.argv[7], sys.argv[8], sys.argv[9], sys.argv[10], sys.argv[11], sys.argv[12], sys.argv[13], sys.argv[14], sys.argv[15], sys.argv[16], sys.argv[17], sys.argv[18], sys.argv[19],sys.argv[20],sys.argv[21] ]]
+# Decision Tree Model
+file1 = open('model1.pkl', 'wb') 
+pickle.dump(clf1, file1)
+file1.close()
 
-# Prediction By Decision Tree
-print(clf1.predict(userdata)) 
-# Prediction By SVM
-print(clf2.predict(userdata)) 
-# "Prediction By Random Forest
-print(clf3.predict(userdata)) 
+# SVM Model
+file2 = open('model2.pkl', 'wb') 
+pickle.dump(clf2, file2)
+file2.close()
+
+# Random Forest Model
+file3 = open('model3.pkl', 'wb') 
+pickle.dump(clf3, file3)
+file3.close()
+
+print("All Model Building Done!")
 
 
