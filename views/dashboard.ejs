@@ -22,7 +22,7 @@
         
     </div>
 </div>
-
+<% var count=0; %>
 <div class="col-md-9 effect">
     <% if(user.result.length === 0){ %>
         <h5 style="margin-top:150px;"><a href="/main-form">Click Here</a> to assess yourself, and get your job predicted</h5>
@@ -33,8 +33,8 @@
                 <div class="col-md-3">
                     <h5><%= element.date %></h5>
                 </div>
-                <div class="col-md-6"><hr style="height: 4px; color: black;"/></div>
-                <div class="col-md-3"><a onclick="show()"> My Response</a></div>
+                <div class="col-md-9"><hr style="height: 4px; color: black;"/></div>
+                
             </div>
             <div class="row">
                 <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
@@ -71,7 +71,7 @@
                     </div>
                 </div> 
             </div>
-            <div class="row response">
+            <div class="row response" id='demo'>
                 <div class="col-md-4">
                     <h6>Logical Quotient Rating: <%= element.response.q1 %> </h6>
                     <h6>Coding Skills Rating: <%= element.response.q2 %> </h6>
