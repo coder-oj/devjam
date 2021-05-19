@@ -1,0 +1,20 @@
+<%- include('partials/adminheader'); -%>
+
+    <div>
+        <div class="row">
+         <%var roles %>
+         <% roles.forEach((element) => { %>
+         <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="assets/img/jobs-img/<%=element.name%>.jpg" alt="Card image cap">
+                <div class="card-body">
+                  <h5 class="card-title" style="font-weight: 700;"><%= element.name %></h5>
+                  <a href="/displayres-<%=element.name%>" class="btn"> Click here </a>
+                </div>
+            </div>
+         </div> 
+         <% }); %>
+        </div>
+    </div>
+
+<%- include('partials/footer'); -%>

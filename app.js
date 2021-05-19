@@ -6,9 +6,9 @@ const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 const User = require('./models/User');
 const Admin = require('./models/Admin');
-//const Jobrole = require('./models/jobrole');
+const Jobrole = require('./models/jobrole');
 
-const { requireAuth, checkUser, requireAuthAdmin, checkAdmin } = require('./middleware/authMiddleware');
+const { requireAuth, checkUser, requireAuthAdmin, checkAdmin, findbyrole } = require('./middleware/authMiddleware');
 const authRoutes = require('./routes/authRoutes');
 const { ResumeToken } = require('mongodb');
 
@@ -38,6 +38,36 @@ mongoose.connect(process.env.DATABASE_URL , {useNewUrlParser: true, useCreateInd
 app.get('/', checkUser);
 app.get('/main-form', checkUser);
 app.post('/demo', checkUser);
+
+app.get('/findbyrole',requireAuthAdmin);
+app.get('/displayres-:role', requireAuthAdmin);
+app.get('/findbyrole', checkAdmin);
+app.get('/displayres-:role', checkAdmin);
+
+app.get('/findbyrole', (req,res)=> {
+    Jobrole.find({}, function(err,roles) {
+      if(err){
+        console.log(err);
+      }
+      else{
+        res.render('findbyrole', {roles});
+      }
+    });
+});
+
+app.get('/displayres-:role', async (req,res) =>{
+  var role = req.params.role;
+  console.log(role);
+  try {
+    const results = await User.findbyrole(role);
+    if(results){
+      res.render('displayres', {results});
+    }
+  } catch (error) {
+    console.log(error);
+  }
+})
+
 app.get('/dashboard', checkUser);
 app.get('/adminhome', checkAdmin);
 
@@ -92,14 +122,7 @@ app.post('/demo',checkUser, (req,res)=>{
     var str = d.split("\r\n");
     str.pop();
     
-
-    // to get current date
-    // var todayTime = new Date();
-    // var month = todayTime .getMonth() + 1;
-    // var day = todayTime .getDate();
-    // var year = todayTime .getFullYear();
     var date = Date().substring(4,21) + " IST";
-    
    
     var prediction = {
       s1: str[0].slice(2,str[0].length-2),
@@ -117,7 +140,6 @@ app.post('/demo',checkUser, (req,res)=>{
     if(prediction.s3 === "Software Quality Assurance (QA) / Testing"){
       prediction.s3 = "Software Quality Assurance";
     }
-   
   
     User.updateOne({'_id':res.locals.user.id},
       {$push : {'result':prediction}},(err,docs)=>{
@@ -130,12 +152,7 @@ app.post('/demo',checkUser, (req,res)=>{
           res.redirect('/dashboard');
         }
       });
-
-
   });
-
-
-
 });
 
 const port = 8000;
