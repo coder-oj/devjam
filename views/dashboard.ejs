@@ -110,12 +110,12 @@
                     <h6>Worked in team ever?: <%= (element.response.q8)?"Yes":"No" %> </h6>
                     <h6>Introvert?: <%= (parseInt(element.response.q9))?"Yes":"No" %> </h6>
                     <h6>Hard Worker: <%= (parseInt(element.response.q12a))?"Yes":"No" %> </h6>
-                    <h6>Smart Worker: <%= (element.response.q12b)?"Yes":"No" %> </h6>
-                    <h6>Management: <%= (element.response.q13a)?"Yes":"No" %> </h6>
+                    <h6>Smart Worker: <%= (parseInt(element.response.q12b))?"Yes":"No" %> </h6>
+                    <h6>Management: <%= (parseInt(element.response.q13a))?"Yes":"No" %> </h6>
                     
                 </div>
                 <div class="col-md-5">
-                    <h6>Technical: <%= (element.response.q13b)?"Yes":"No" %> </h6>
+                    <h6>Technical: <%= (parseInt(element.response.q13b))?"Yes":"No" %> </h6>
                     <h6>Interested Subject: <%= subjects[parseInt(element.response.q14)] %> </h6>
                     <h6>Interested Type of Books: <%= books[parseInt(element.response.q15)] %> </h6>
                     <h6>Certification: <%= certificate[parseInt(element.response.q16)] %> </h6>
