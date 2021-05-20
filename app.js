@@ -7,6 +7,8 @@ const dotenv = require('dotenv');
 const User = require('./models/User');
 const Admin = require('./models/Admin');
 const Jobrole = require('./models/jobrole');
+const session = require('express-session');
+const flash = require('connect-flash');
 
 const { requireAuth, checkUser, requireAuthAdmin, checkAdmin, findbyrole } = require('./middleware/authMiddleware');
 const authRoutes = require('./routes/authRoutes');
@@ -15,6 +17,8 @@ const { ResumeToken } = require('mongodb');
 const app = express();
 dotenv.config({path: './.env'});
 
+app.use(flash());
+app.use(session({secret: 'ssshhh', saveUninitialized: true, resave: true}));
 //middleware
 app.use(express.static(__dirname+'/public'));
 app.use(express.json());
@@ -39,10 +43,15 @@ app.get('/', checkUser);
 app.get('/main-form', checkUser);
 app.post('/demo', checkUser);
 
+
+
 app.get('/findbyrole',requireAuthAdmin);
 app.get('/displayres-:role', requireAuthAdmin);
+app.post('predict-admin',requireAuthAdmin);
+
 app.get('/findbyrole', checkAdmin);
 app.get('/displayres-:role', checkAdmin);
+app.post('main-form-admin',checkAdmin);
 
 app.get('/findbyrole', (req,res)=> {
     Jobrole.find({}, function(err,roles) {
@@ -69,21 +78,28 @@ app.get('/displayres-:role', async (req,res) =>{
 })
 
 app.get('/dashboard', checkUser);
-app.get('/adminhome', checkAdmin);
+app.get('/main-form-admin', checkAdmin);
 
 //routes
 app.get('/', (req,res) => { 
     res.render('home');
 });
 app.get('/main-form', requireAuth, (req, res) => res.render('main-form'));
-app.get('/adminhome', requireAuthAdmin, (req, res) => res.render('adminhome'));
+
+app.get('/main-form-admin', requireAuthAdmin, (req, res) =>{ 
+  
+  res.render('main-form-admin',{message:req.flash('success')});
+
+
+});
 app.get('/dashboard', requireAuth, (req, res) => res.render('dashboard'));
 
 app.use(authRoutes);
 
 
-app.post('/demo',checkUser, (req,res)=>{
+app.post('/demo', (req,res)=>{
   //console.log(res.locals.user);
+ 
   let spwan = require('child_process').spawn;
   console.log(req.body);
   var q1 = req.body.q1;
@@ -153,6 +169,79 @@ app.post('/demo',checkUser, (req,res)=>{
         }
       });
   });
+});
+
+
+app.post('/predict-admin',(req,res)=>{
+
+  let spwan = require('child_process').spawn;
+  console.log(req.body);
+  var q1 = req.body.q1;
+  var q2 = req.body.q2;
+  var q3 = req.body.q3;
+  var q4 = req.body.q4;
+  var q5 = req.body.q5;
+  var q6 = req.body.q6;
+  var q7 = req.body.q7;
+  var q8 = req.body.q8;
+  var q9 = req.body.q9;
+  var q10 = req.body.q10;
+  var q11 = req.body.q11; 
+  var q12a = req.body.q12a;
+  var q12b = req.body.q12b;
+  var q13a = req.body.q13a;
+  var q13b = req.body.q13b;
+  var q14 = req.body.q14;
+  var q15 = req.body.q15;
+  var q16 = req.body.q16;
+  var q17 = req.body.q17;
+  var q18 = req.body.q18;
+  var q19 = req.body.q19;
+  var process = spwan('py',['./predict.py',q1, q2, q3, q4, q5, q6, q7, q8, q9, q10,
+                q11, q12a, q12b, q13a, q13b, q14, q15, q16, q17, q18, q19 ]
+
+  // userdata = req.body;
+  // var process = spwan('py',['./abc.py', userdata]
+
+  );
+ 
+  
+  process.stdout.on('data',(data)=>{
+    d = data.toString();
+   
+    var str = d.split("\r\n");
+    str.pop();
+    
+    var s1 = str[0].slice(2,str[0].length-2);
+    var s2 = str[1].slice(2,str[1].length-2);
+    var s3 = str[2].slice(2,str[2].length-2);
+    // var date = Date().substring(4,21) + " IST";
+   
+    // var prediction = {
+    //   s1: str[0].slice(2,str[0].length-2),
+    //   s2: str[1].slice(2,str[1].length-2),
+    //   s3: str[2].slice(2,str[2].length-2),
+    //   response: {q1: q1, q2: q2, q3: q3, q4: q4, q5: q5, q6: q6, q7: q7, q8: q8, q9: q9, q10: q10, q11: q11, q12a: q12a, q12b: q12b, q13a: q13a, q13b: q13b, q14: q14, q15: q15, q16: q16, q17: q17, q18: q18, q19: q19},
+    //   date:date
+    // }
+    if(s1 === "Software Quality Assurance (QA) / Testing"){
+        s1 = "Software Quality Assurance";
+    }
+    if(s2 === "Software Quality Assurance (QA) / Testing"){
+      s2 = "Software Quality Assurance";
+    }
+    if(s3 === "Software Quality Assurance (QA) / Testing"){
+        s3 = "Software Quality Assurance";
+    }
+    var result = `Predcited Job Roles are ${s1}, ${s2} and ${s3}`;
+
+    req.flash('success', result);
+    res.redirect('/main-form-admin');
+  
+  });
+
+ 
+
 });
 
 const port = 8000;
