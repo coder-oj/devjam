@@ -9,6 +9,9 @@ const Admin = require('./models/Admin');
 const Jobrole = require('./models/jobrole');
 const session = require('express-session');
 const flash = require('connect-flash');
+const cloudinary = require('cloudinary');
+const Formidable = require('formidable');
+const util = require('util');
 
 const { requireAuth, checkUser, requireAuthAdmin, checkAdmin, findbyrole } = require('./middleware/authMiddleware');
 const authRoutes = require('./routes/authRoutes');
@@ -240,6 +243,29 @@ app.post('/predict-admin',(req,res)=>{
   
   });
 });
+
+
+// Cloudinary configuration for profile pic
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.API_KEY,
+    api_secret: process.env.API_SECRET
+});
+
+// Profile pic uploading on cloudinary
+app.post('/dashboard/upload', requireAuth, (req, res) => {
+  // parse a file upload
+   const form = new Formidable();
+   form.parse(req, (err, fields, files) => {
+    cloudinary.uploader.upload(files.upload.path, result => {
+      console.log(result)
+      if (result.public_id) {
+          res.send('Uploaded Successfully! on ' + result.url);
+        }
+    });
+  });
+});
+
 
 const port = 8000;
 app.listen(port, () =>{
