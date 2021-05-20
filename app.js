@@ -10,7 +10,7 @@ const Jobrole = require('./models/jobrole');
 const session = require('express-session');
 const flash = require('connect-flash');
 
-const { requireAuth, checkUser, requireAuthAdmin, checkAdmin, findbyrole } = require('./middleware/authMiddleware');
+const { requireAuth, checkUser, requireAuthAdmin, checkAdmin } = require('./middleware/authMiddleware');
 const authRoutes = require('./routes/authRoutes');
 const { ResumeToken } = require('mongodb');
 
@@ -37,13 +37,10 @@ mongoose.connect(process.env.DATABASE_URL , {useNewUrlParser: true, useCreateInd
 }).catch((err) => { console.log(err);});
 
 
-
 //middleware
 app.get('/', checkUser);
 app.get('/main-form', checkUser);
 app.post('/demo', checkUser);
-
-
 
 app.get('/findbyrole',requireAuthAdmin);
 app.get('/displayres-:role', requireAuthAdmin);
@@ -52,6 +49,18 @@ app.post('predict-admin',requireAuthAdmin);
 app.get('/findbyrole', checkAdmin);
 app.get('/displayres-:role', checkAdmin);
 app.post('main-form-admin',checkAdmin);
+
+app.post('/addrole', async (req,res) =>{
+  const { id, st } = req.body;
+  User.updateOne({_id: id}, 
+    {$addToSet: {roles: st}}, (err, result) =>{
+    if(err){
+      console.log(err);
+    }
+    else{
+      res.redirect('/dashboard');
+  }});
+});
 
 app.get('/findbyrole', (req,res)=> {
     Jobrole.find({}, function(err,roles) {

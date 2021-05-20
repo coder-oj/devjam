@@ -29,7 +29,8 @@
 <% const company = ["Service Based","Web Services","BPA","Testing and Maintainance Services","Product Based","Finance","Cloud Services","Product Development","Sales and Marketing","SAaS Services"]; %>
 <% const career = ["System Developer","Security","Business Process Analyst","Developer","Testing","Cloud Computing"]; %>
 <% var count=-1; %>
-<% var arr1 = ["Applications Developer"]%>
+<% const jd = { 'Applications Developer': 'An application developer is responsible for developing and modifying source code for software applications. These applications are aimed at aiding customers with computer tasks or programs.','CRM Technical Developer': 'CRM developers are programmers who specialize in systems that collect user, consumer, and subscriber data. Their job is to improve the tools used.','Database Developer': 'Database developers work in the IT department and are responsible for the development and maintenance of databases while following specific coding standards.','Mobile applications developer': 'Mobile applications developers create and develop mobile apps. They have a strong working knowledge of the different platforms that applications are suitable for.','Network Security Engineer': 'A network security engineer is involved in the provisioning, deployment, configuration, and administration of many different pieces of network- and security-related hardware and software.','Software Developer': 'Software developers develop computer applications that allow users to perform specific tasks on computers.  They may also customize existing systems that run devices or control networks.','Software Engineer': 'A software engineer is a person who applies the principles of software engineering to the design, development, maintenance, testing, and evaluation of computer software.','Software Quality Assurance': 'A software quality assurance engineer monitors every phase of the software development process so as to ensure design quality, making sure that the software adheres to the standards.','System Security Administrator': 'A security systems administrator handles all aspects of information security and protects the virtual data resources of a company.','Technical Support': 'Diagnosing and repairing faults. Resolving network issues. Installing and configuring hardware and software. Speaking to customers to quickly get to the root of their problem.','UX Designer': 'UX designer make products and technology usable, enjoyable, and accessible for humans. UX designers tend to work as part of a wider product team, and help bridge the gap between users and teams','Web Developer': 'They are developers who are capable of handling all aspects of a web application such as front-end, back-end, clients, servers and databases.'} %>
+<% var arr1 = user.roles %>
 <% var flag = false %>
 <% function checkArr(st){ %>
     <% for(let i=0;i<arr1.length; i++){ %>
@@ -58,14 +59,14 @@
                     <% if(flag){ %>
                         <button id='a<%= count%>' onclick="alert('Already Selected');" style="border:none;">
                     <% } else { %>
-                        <button id='a<%= count%>' onclick="apply('<%= element.s1 %>');" style="border:none;">
+                        <button id='a<%= count%>' onclick="apply('<%= user._id%>','<%= element.s1 %>');" style="border:none;">
                         <% } %>
                     <div class="card" style="width: 18rem;">
                         <img class="card-img-top" src="assets/img/jobs-img/<%=element.s1%>.jpg" alt="Card image cap">
                         <div class="card-body">
                           <h5 class="card-title" style="font-weight: 700;"><%= element.s1 %></h5>
                           <h6 class="card-subtitle mb-2 text-muted"><%= element.date %></h6>
-                          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                          <p class="card-text"><%= jd[element.s1] %></p>
                           <h6 style="font-size: 13px; color: rgba(0, 0, 0, 0.5);">Decision Tree Classifier</h6>
                         </div>
                     </div>
@@ -76,14 +77,14 @@
                     <% if(flag){ %>
                         <button id='b<%= count%>' onclick="alert('Already Selected');" style="border:none;">
                     <% } else { %>
-                        <button id='b<%= count%>' onclick="apply('<%= element.s2 %>');" style="border:none;">
+                        <button id='b<%= count%>' onclick="apply('<%= user._id%>', '<%= element.s2 %>');" style="border:none;">
                         <% } %>
                     <div class="card" style="width: 18rem;">
                         <img class="card-img-top" src="assets/img/jobs-img/<%=element.s2%>.jpg" alt="Card image cap">
                         <div class="card-body">
                           <h5 class="card-title"  style="font-weight: 700;"><%= element.s2 %></h5>
                           <h6 class="card-subtitle mb-2 text-muted"><%= element.date %></h6>
-                          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                          <p class="card-text"><%= jd[element.s2] %></p>
                           <h6 style="font-size: 13px; color: rgba(0, 0, 0, 0.5);">Support Vector Machine Classifier</h6>
                         </div>
                     </div>
@@ -95,14 +96,14 @@
                     <% if(flag){ %>
                         <button id='c<%= count%>' onclick="alert('Already Selected');" style="border:none;">
                     <% } else { %>
-                        <button id='c<%= count%>' onclick="apply('<%= element.s3 %>');" style="border:none;">
+                        <button id='c<%= count%>' onclick="apply('<%= user._id%>', '<%= element.s3 %>');" style="border:none;">
                         <% } %>
                         <div class="card" style="width: 18rem;">
                             <img class="card-img-top" src="assets/img/jobs-img/<%=element.s3%>.jpg" alt="Card image cap">
                         <div class="card-body">
                           <h5 class="card-title" style="font-weight: 700;"><%= element.s3 %></h5>
                           <h6 class="card-subtitle mb-2 text-muted"><%= element.date %></h6>
-                          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                          <p class="card-text"><%= jd[element.s3] %></p>
                           <h6 style="font-size: 13px; color: rgba(0, 0, 0, 0.5);">Random Forest Classifier</h6>
                         </div>
                     </div>
@@ -180,12 +181,22 @@
         
     };
     
-    function apply(st){
-            console.log(st);
+   async function apply(id, st){
+            console.log(id + ' '+  st);
+            try {
+                const res = await fetch('/addrole',{
+                    method: 'POST',
+                    body: JSON.stringify({id, st}),
+                    headers: {'Content-Type': 'application/json'}
+                });
+                const data = res.json();
+                if(data) {
+                    location.assign('/dashboard');
+                }
+            }catch (error) {
+                console.log(error);
+            }
     }
+
 </script>
 <%- include('partials/footer'); -%>
-
-
-
-
