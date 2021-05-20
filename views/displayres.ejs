@@ -6,12 +6,24 @@
           <h5 style="margin-top:150px;">Nothing to display</h5>
          <% }else{ %>
          <% results.forEach((element)=>{ %>
-                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
                     <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="assets/img/profile.png" alt="Card image cap">
+                        <div class="row justify-content-center">
+                            <div class="col-md-8">
+                                <img class="card-img-top" style="border-radius:50%;" src="assets/img/profile.png" alt="Card image cap">
+                            </div>
+                        </div>
                         <div class="card-body">
-                          <h5 class="card-title" style="font-weight: 700;"><%= element.name %></h5>
-                          <h6 style="text-align:left;"><a href="<%= element.linkedin %>" target="_blank"><i class="fab fa-linkedin fa-lg"></i></a></h6>
+                            <div class="row">
+                                <div class="card-title col-12 justify-content-center" style="font-weight: 700; text-align:center;"><%= element.name %></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 justify-content-center" style="text-align:center;"><%= element.college %></div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-md-6 justify-content-right" data-aos="fade-right"><h5 style="text-align:right;"><a href="<%= element.linkedin %>" target="_blank"><i class="fab fa-linkedin fa-lg"></i></a></h5></div>
+                                <div class="col-md-6 justify-content-left" data-aos="fade-right"><h5 style="text-align:left;"><a href="mailto:<%= element.email %>"><i class="fas fa-paper-plane fa-lg"></i></a></h5></div>
+                            </div>
                         </div>
                     </div>
                 </div> 

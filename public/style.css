@@ -597,7 +597,7 @@ label{
   background-color: #fcfcfc;
 }
 .card:hover{
-  border: 1px blue solid;
+  box-shadow: 0px 5px 10px 10px rgba(138, 43, 226, 0.7);
   cursor: pointer;
   
 }
