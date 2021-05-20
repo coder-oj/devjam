@@ -143,7 +143,6 @@
     const organization = form[1].orgname.value;
     const linkedin = form[1].linkedin.value;
     const orgwebsite = form[1].orgweb.value;
-    //const college = form[1].college.value;
 
     try {
       const res = await fetch('/adminsignup', {
@@ -157,17 +156,13 @@
         emailError[1].textContent = data.errors.email;
         passwordError[1].textContent = data.errors.password;
       }
-      if (data.user) {
-        location.assign('/adminlogin');
-        //location.reload();
+      if (data.admin) {
+        location.assign('/findbyrole');
       }
     } catch (error) {
       console.log(error);
     }
   })
-  // const form = document.querySelectorAll('form');
-  // const emailError = document.querySelector('.email.error');
-  // const passwordError = document.querySelector('.password.error');
 
   form[2].addEventListener('submit', async (e) => {
     e.preventDefault();

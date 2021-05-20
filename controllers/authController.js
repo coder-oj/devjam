@@ -73,22 +73,6 @@ const createTokenAdmin = (id) => {
     });
 }
 
-module.exports.login_get = (req,res) => {
-    res.render('login');
-}
-
-module.exports.adminlogin_get = (req,res) => {
-    res.render('adminlogin');
-}
-
-module.exports.adminsignup_get = (req,res) => {
-    res.render('adminsignup');
-}
-
-module.exports.signup_get = (req,res) => {
-    res.render('signup');
-}
-
 module.exports.dashboard_get = (req,res) => {
     res.render('dashboard');
 }
@@ -141,9 +125,9 @@ module.exports.adminsignup_post = async (req,res) => {
     const { name, email, password, organization, orgwebsite, linkedin } = req.body;
     try {
         const admin = await Admin.create({ name, email, password, organization, orgwebsite, linkedin });
-        //const token = createTokenAdmin(admin._id);
-        //res.cookie('jwtadm',token, { httpOnly: true,maxAge: maxAge*1000});
-        //res.status(201).json({admin: admin._id});
+        const token = createTokenAdmin(admin._id);
+        res.cookie('jwtadm',token, { httpOnly: true,maxAge: maxAge*1000});
+        res.status(201).json({admin: admin._id});
     } 
     catch (error) {
       const errors = handleErrorsAdmin(error);

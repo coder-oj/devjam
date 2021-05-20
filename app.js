@@ -233,20 +233,15 @@ app.post('/predict-admin',(req,res)=>{
     if(s3 === "Software Quality Assurance (QA) / Testing"){
         s3 = "Software Quality Assurance";
     }
-    var result = `Predcited Job Roles are ${s1}, ${s2} and ${s3}`;
+    var result = `Predcited Job Roles are ${s1}, ${s2} and ${s3}.`;
 
     req.flash('success', result);
     res.redirect('/main-form-admin');
   
   });
-
- 
-
 });
 
 const port = 8000;
 app.listen(port, () =>{
     console.log(`Server is running on localhost ${port}`);
 });
-
-
