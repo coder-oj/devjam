@@ -28,10 +28,11 @@
       <nav id="navbar" class="navbar">
         <ul>
           <% if (admin) { %>
-            <li>Welcome, <%= admin.name %> </li>
-            <li> <a href="/adminlogout">Log Out</a></li>
-            <li> <a href="/findbyrole">Find By Job Roles!</a></li>
-            <li> <a href="/main-form-admin">Find By From</a></li>
+            <li class="nav-link scrollto active">Welcome, <%= admin.name %> </li>
+            <li><a class="nav-link scrollto" href="/findbyrole" >Dashboard</a></li>
+            <li><a class="nav-link scrollto" href="/main-form-admin" >Assess Form!</a></li>
+            <li> <a class="getstarted scrollto" href="/adminlogout">Log Out</a></li>
+            
 
           <%  } else { %>
             <li>blah</li>
