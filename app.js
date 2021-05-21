@@ -10,18 +10,15 @@ const Admin = require('./models/Admin');
 const Jobrole = require('./models/jobrole');
 const session = require('express-session');
 const flash = require('connect-flash');
-<<<<<<< HEAD
+
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 
 
-
-||||||| 78a80f2
-=======
 const cloudinary = require('cloudinary');
 const Formidable = require('formidable');
 const util = require('util');
->>>>>>> 29a3d92e401d9c1a7e5df73c6f0c61ef0fa81c1d
+
 
 const { requireAuth, checkUser, requireAuthAdmin, checkAdmin } = require('./middleware/authMiddleware');
 const authRoutes = require('./routes/authRoutes');
