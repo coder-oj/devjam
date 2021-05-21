@@ -44,7 +44,7 @@
 				<h3 class="col-3">Questionaire Form
 				</h3>
 			</div>
-			<form class="row" action="/predict-admin" method='POST'>
+			<form class="row" action="/predict-admin" method="POST">
 				<div class="row">
 					<div class="col-md-6">
 
@@ -400,7 +400,7 @@
 					</div>
 					<div class="row">
 						<div class="col-12">
-							<button class="btn btn-primary">Submit form</button>
+							<button class="btn btn-primary" id="subm" onclick="loader('subm');">Submit form</button>
 						</div>
 					</div>
 			</form>
@@ -414,7 +414,9 @@
 				document.getElementById(a).checked = false;
 				document.getElementById(b).checked = true;
 			}
-
+			function loader(el){
+				document.getElementById(el).innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+			}
 		</script>
 	</body>
 

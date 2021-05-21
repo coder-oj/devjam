@@ -380,7 +380,7 @@
 					</div>
 					<div class="row">
 						<div class="col-12">
-							<button class="btn btn-primary">Submit form</button>
+							<button class="btn btn-primary" id="subm" onclick="loader('subm');">Submit form</button>
 						</div>
 					</div>
 			</form>
@@ -394,7 +394,10 @@
 				document.getElementById(a).checked = false;
 				document.getElementById(b).checked = true;
 			}
-
+			function loader(el){
+				document.getElementById(el).innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+				
+			}
 		</script>
 	</body>
 

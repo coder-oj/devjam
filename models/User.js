@@ -32,7 +32,9 @@ const userSchema = new mongoose.Schema({
         type: String, 
         required: true
     },
-    result: Array
+    result: Array,
+    imgurl: String,
+    roles: Array
    });
   
 userSchema.pre('save', async function(next){
@@ -60,7 +62,7 @@ userSchema.statics.login = async function(email,password) {
 }
 
 userSchema.statics.findbyrole = async function(role) {
-    const results = await this.find({'result': { $elemMatch: {$or: [{'s1':role}, {'s2':role}, {'s3':role}]}}});
+    const results = await this.find({'roles':  role});
     if(results) {
         //console.log(results);
         return results;
