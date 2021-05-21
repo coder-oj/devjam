@@ -33,7 +33,7 @@ const userSchema = new mongoose.Schema({
         required: true
     },
     result: Array,
-    imgurl: String,
+    imgurl: {type: String, default: "assets/img/profile.png"},
     cvurl: String,
     roles: Array
    });

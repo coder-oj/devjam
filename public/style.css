@@ -603,16 +603,58 @@ label{
   margin-top: 10px ;
   box-shadow: 0px 5px 10px 10px rgba(138, 43, 226, 0.3);
 }
-.floa{
+.float{
   display:none;
   position: absolute;
   background-color: rgba(255, 255, 255, 0.9);
   color:rgb(141, 133, 255);
-  float: right;
   padding: 5px 15px;
   font-size: large;
   margin-left: 25%;
 }
-.card:hover .floa{
+.card:hover .float{
   display:block;
+  
 }
+
+.upload-container{
+  display: none;
+  position:fixed;
+  top:150px;
+  left:35%;
+  border:1px blueviolet solid;
+  width:25%;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0px 5px 10px 10px rgba(138, 43, 226, 0.3);
+  background-color: #fff;
+}
+
+.floa{
+  visibility: hidden;
+  transition: .5s ease;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+  z-index:5;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: 220px;
+  transition: .5s ease;
+  border-radius: 50%;
+}
+
+.contain:hover .image{
+  opacity: 0.3;
+}
+
+.contain:hover .floa {
+  visibility: visible;
+}
+/* https://res.cloudinary.com/umang/image/upload/v1621581134/ubesr2i78l4mj2bd2ylb.jpg */

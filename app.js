@@ -339,7 +339,7 @@ app.get('/displayres-:role', async (req,res) =>{
   try {
     const results = await User.findbyrole(role);
     if(results){
-      res.render('displayres', {results});
+      res.render('displayres', {results: results, role: role});
     }
   } catch (error) {
     console.log(error);
@@ -534,6 +534,28 @@ app.post('/dashboard/upload-:id', requireAuth, (req, res) => {
             }
             else{
               res.redirect('/dashboard');
+          }});
+        }
+    });
+  });
+});
+
+app.post('/findbyrole/upload-:id', requireAuthAdmin, (req, res) => {
+  // parse a file upload
+  const id = req.params.id;
+   const form = new Formidable();
+   form.parse(req, (err, fields, files) => {
+    cloudinary.uploader.upload(files.upload.path, result => {
+      //console.log(result)
+      if (result.public_id) {
+          //console.log('Uploaded Successfully! on ' + result.url);
+          Admin.updateOne({_id: id}, 
+            {$set: {imgurl: result.url}}, (err, result) =>{
+            if(err){
+              console.log(err);
+            }
+            else{
+              res.redirect('/findbyrole');
           }});
         }
     });

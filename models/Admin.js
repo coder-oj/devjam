@@ -27,7 +27,8 @@ const adminSchema = new mongoose.Schema({
     linkedin: { 
         type: String, 
         required: true
-    }
+    },
+    imgurl: {type: String, default: "assets/img/profile.png"},
    });
   
 adminSchema.pre('save', async function(next){

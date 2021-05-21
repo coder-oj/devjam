@@ -13,18 +13,13 @@
     <%    img = user.imgurl; %>
     <% } %>
     <div class="row justify-content-center">
-<div class="col-md-9" data-aos="fade-left"><img src="<%=img%>" alt="profile pic" style=" height:220px; width:100%;  border-radius: 50%;"></div><br>
-</div> 
-    <div class="update-profile">
-         <form  action="/dashboard/upload-<%= user._id%>" enctype="multipart/form-data" method="post">
-         <input type="file" name="upload" /><br/><br>
-         <input type="submit" value="Upload Image" />
-        </form>
-        <form  action="/dashboard/uploadcv-<%= user._id%>" enctype="multipart/form-data" method="post">
-            <input type="file" name="upload" /><br/><br>
-            <input type="submit" value="Upload CV" />
-        </form>
+        <div class="col-md-9 contain" data-aos="fade-left">
+            <div class="floa"><a onclick="toggle('upload-container')"><i class="fas fa-camera fa-2x text"></i></a></div>
+            <a onclick="toggle('upload-container')">
+                <img src="<%=img%>" alt="profile pic" class="image">
+        </div><br>
     </div>
+    
     <div class="row justify-content-center" >
         <div class="col-md-12 " data-aos="fade-right"><h4 style="color:rgb(252, 113, 58); text-align:center;"><%= user.name %></h4></div>
     </div>
@@ -109,7 +104,7 @@
                         <button id='a<%= count%>' onclick="apply('<%= user._id%>','<%= element.s1 %>');" style="border:none;">
                         <% } %>
                     <div class="card" style="width: 18rem;">
-                        <div class="floa" >Click to Apply</div>
+                        <div class="float" >Click to Apply</div>
                         <img class="card-img-top" src="assets/img/jobs-img/<%=element.s1%>.jpg" alt="Card image cap">
                         <div class="card-body">
                           <h5 class="card-title" style="font-weight: 700;"><%= element.s1 %></h5>
@@ -128,6 +123,7 @@
                         <button id='b<%= count%>' onclick="apply('<%= user._id%>', '<%= element.s2 %>');" style="border:none;">
                         <% } %>
                     <div class="card" style="width: 18rem;">
+                        <div class="float" >Click to Apply</div>
                         <img class="card-img-top" src="assets/img/jobs-img/<%=element.s2%>.jpg" alt="Card image cap">
                         <div class="card-body">
                           <h5 class="card-title"  style="font-weight: 700;"><%= element.s2 %></h5>
@@ -147,6 +143,7 @@
                         <button id='c<%= count%>' onclick="apply('<%= user._id%>', '<%= element.s3 %>');" style="border:none;">
                         <% } %>
                         <div class="card" style="width: 18rem;">
+                            <div class="float" >Click to Apply</div>
                             <img class="card-img-top" src="assets/img/jobs-img/<%=element.s3%>.jpg" alt="Card image cap">
                         <div class="card-body">
                           <h5 class="card-title" style="font-weight: 700;"><%= element.s3 %></h5>
@@ -212,6 +209,49 @@
 </div>
 
 </div>
+
+<div class="row">
+    <div class="container upload-container" id="upload-container">
+        <div class="row">
+            <div class="col-md-9 offset-md-1">
+                <h4 style="font-weight: 700; text-align: center;">Update Profile</h4>
+            </div>
+            <div class="col-md-1 offset-md-1">
+                <a style="font-size: 20px" onclick="clos('upload-container');"><i class="fas fa-times"></i></a>
+            </div>
+        </div>
+        <form action="/dashboard/upload-<%= user._id%>" enctype="multipart/form-data" method="post">
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="update-photo" class="form-label">Select Photo</label>
+                    <div class="input-group">
+                        <input type="file" class="form-control" id="update-photo" name="upload" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <input type="submit" class="btn btn-primary" value="Upload Image" />
+                </div>
+            </div>
+        </form>
+        <form action="/dashboard/uploadcv-<%= user._id%>" enctype="multipart/form-data" method="post">
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="update-photo" class="form-label">Select Resume</label>
+                    <div class="input-group">
+                        <input type="file" class="form-control" id="update-photo" name="upload" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <input type="submit" class="btn btn-primary" value="Upload Resume" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 <script> 
     function show(ob, cur){
         var resp = document.getElementById(ob);
@@ -267,5 +307,6 @@
                 console.log(error);
             }
     }
+
     </script>
 <%- include('partials/footer'); -%>
