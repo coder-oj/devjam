@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const ejs = require('ejs');
+const bcrypt = require('bcryptjs');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
@@ -9,9 +10,18 @@ const Admin = require('./models/Admin');
 const Jobrole = require('./models/jobrole');
 const session = require('express-session');
 const flash = require('connect-flash');
+<<<<<<< HEAD
+const jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer');
+
+
+
+||||||| 78a80f2
+=======
 const cloudinary = require('cloudinary');
 const Formidable = require('formidable');
 const util = require('util');
+>>>>>>> 29a3d92e401d9c1a7e5df73c6f0c61ef0fa81c1d
 
 const { requireAuth, checkUser, requireAuthAdmin, checkAdmin } = require('./middleware/authMiddleware');
 const authRoutes = require('./routes/authRoutes');
@@ -39,6 +49,15 @@ mongoose.connect(process.env.DATABASE_URL , {useNewUrlParser: true, useCreateInd
 
 }).catch((err) => { console.log(err);});
 
+// mail config
+
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'architkeshri4@gmail.com',
+    pass: process.env.EMAIL_APP_PASS
+  }
+});
 
 //middleware
 app.get('/', checkUser);
@@ -52,6 +71,204 @@ app.post('predict-admin',requireAuthAdmin);
 app.get('/findbyrole', checkAdmin);
 app.get('/displayres-:role', checkAdmin);
 app.post('main-form-admin',checkAdmin);
+
+// Reset Password Functionality
+
+// Password Verification link to be sent to the email provided in this form!
+app.get('/forget-password',(req,res)=>{
+  res.render('forgotPassword');
+});
+
+//Check if user with given mail is registered in  post method 
+app.post('/forget-password',(req,res)=>{
+  var{email} = req.body;// email taken  from the form
+
+  // check is email is of user
+  User.findOne({'email':email},(err,result)=>{
+    if(err|| result === null){
+      // if not user check if email is for admin
+      Admin.findOne({'email':email},(err,result)=>{
+        if(err || result === null){
+          return res.send("USER does not exists");
+        }
+        // Admin Found 
+        else{
+          
+          console.log(result._id);
+          let secret = process.env.JWT_PASSWORD_RESET_SECRET + result.password;
+          let payload = {
+            email:result.email,
+            _id: result._id
+          }
+          let token = jwt.sign(payload, secret,{expiresIn:'10m'});
+          let link = `http://localhost:8000/reset-password/${result._id}/${token}`;
+          console.log(link)
+          //send mail to admin
+          let mailOptions = {
+            from: 'architkeshri4@gmail.com',
+            to: email,
+            subject: 'Sending Email using Node.js',
+            text: `password link ${link}`
+          };
+          transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+              console.log(error);
+            } else {
+              console.log('Email sent: ' + info.response);
+              return res.send(`email has been sent to admin ${email}`);
+
+    
+            }
+          });
+        
+         
+        }
+      });
+    }
+    //user found 
+    else{
+      
+      console.log(result._id)
+      let secret = process.env.JWT_PASSWORD_RESET_SECRET + result.password;
+      let payload = {
+        email:result.email,
+        _id: result._id
+      }
+      let token = jwt.sign(payload, secret,{expiresIn:'10m'});
+      let link = `http://localhost:8000/reset-password/${result._id}/${token}`;
+      console.log(link)
+      // send mail to user
+      let mailOptions = {
+        from: 'architkeshri4@gmail.com',
+        to: email,
+        subject: 'Sending Email using Node.js',
+        text: `password link ${link}`
+      };
+      transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+          return res.send(`email has been sent to user ${email}`);
+
+        }
+      });
+     
+    }
+  })
+});
+
+app.get('/reset-password/:id/:token',(req,res)=>{
+  let {id,token} = req.params;
+  console.log(id,token);
+  User.findOne({'_id':id},(err,result)=>{
+    if(err || result === null){
+      Admin.findOne({'_id':id},(err,result)=>{
+        if(err || result === null){
+          res.send("Invalid Link or Link Expired")
+        }
+        else{
+          let secret = process.env.JWT_PASSWORD_RESET_SECRET + result.password;
+          try {
+            let paylod = jwt.verify(token,secret);
+            return  res.render('resetPassword',{email: result.email});
+    
+          } catch (error) {
+            console.log(error);
+            res.send("errorrrrrr!");
+          }
+        }
+
+      });
+   
+    }
+    else{
+      let secret = process.env.JWT_PASSWORD_RESET_SECRET + result.password;
+      try {
+        let paylod = jwt.verify(token,secret);
+        return  res.render('resetPassword',{email: result.email});
+
+      } catch (error) {
+        res.send("errrrr!");
+        console.log(error);
+      }
+    }
+  });
+  
+});
+
+app.post('/reset-password/:id/:token',(req,res)=>{
+
+  let {id,token} = req.params;
+  let{password,confirmPassword} = req.body;
+  if(password !== confirmPassword){
+    return res.send("Password Did Not Match");
+  }
+  User.findOne({'_id':id},(err,result)=>{
+    if(err || result === null){
+      Admin.findOne({'_id':id},(err,result)=>{
+        if(err || result === null){
+          res.send("Invalid Link or Link Expired")
+        }
+        else{
+          let secret = process.env.JWT_PASSWORD_RESET_SECRET + result.password;
+          try {
+            let paylod = jwt.verify(token,secret);
+            bcrypt.genSalt(10,(err,salt)=>{
+              if(err){
+                console.log(err);
+                return;
+              }
+              bcrypt.hash(password,salt,(err,hash)=>{
+                Admin.updateOne({'_id':paylod._id},{'password':hash},(err,result)=>{
+                  if(err){
+                    console.log(err);
+
+                  }
+                  else{
+                    res.send("success");
+                  }
+                });
+                
+              })
+            });
+          } catch (error) {
+            console.log(error);
+            res.send("errorrrrrr!");
+          }
+        }
+      });
+    }
+    else{
+      let secret = process.env.JWT_PASSWORD_RESET_SECRET + result.password;
+      try {
+        let paylod = jwt.verify(token,secret);
+        bcrypt.genSalt(10,(err,salt)=>{
+          if(err){
+            console.log(err);
+            return;
+          }
+          bcrypt.hash(password,salt,(err,hash)=>{
+            User.updateOne({'_id':paylod._id},{'password':hash},(err,result)=>{
+              if(err){
+                console.log(err);
+
+              }
+              else{
+                return res.send("success");
+              }
+            });
+            
+          })
+        });
+      } catch (error) {
+
+        console.log(error);
+        return res.send("errorrrr!");
+      }
+    }
+  });
+});
 
 app.post('/addrole', async (req,res) =>{
   const { id, st } = req.body;
@@ -245,12 +462,15 @@ app.post('/predict-admin',(req,res)=>{
     if(s3 === "Software Quality Assurance (QA) / Testing"){
         s3 = "Software Quality Assurance";
     }
-    var result = `Predcited Job Roles are ${s1}, ${s2} and ${s3}.`;
+    var result = `Predcited Job Roles are ${s1}, ${s2} and ${s3}`;
 
     req.flash('success', result);
     res.redirect('/main-form-admin');
   
   });
+
+ 
+
 });
 
 
@@ -280,3 +500,5 @@ const port = 8000;
 app.listen(port, () =>{
     console.log(`Server is running on localhost ${port}`);
 });
+
+
