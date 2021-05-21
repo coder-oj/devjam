@@ -510,6 +510,19 @@ app.post('/dashboard/upload-:id', requireAuth, (req, res) => {
   });
 });
 
+// CV uploading on cloudinary
+app.post('/dashboard/uploadcv', requireAuth, (req, res) => {
+  // parse a file upload
+   const form = new Formidable();
+   form.parse(req, (err, fields, files) => {
+    cloudinary.uploader.upload(files.upload.path, result => {
+      console.log(result)
+      if (result.public_id) {
+          res.send('Uploaded Successfully! on ' + result.url);
+        }
+    });
+  });
+});
 
 const port = 8000;
 app.listen(port, () =>{
