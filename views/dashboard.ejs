@@ -13,12 +13,18 @@
     <%    img = user.imgurl; %>
     <% } %>
     <div class="row justify-content-center">
-        <div class="col-md-9" data-aos="fade-left"><img src="<%=img%>" alt="profile pic" style=" height:220px; width:100%;  border-radius: 50%;"></div><br>
-    </div> 
-    <!-- <form  action="/dashboard/upload" enctype="multipart/form-data" method="post">
-    <input type="file" name="upload" /><br/><br>
-    <input type="submit" value="Upload Image" />
-    </form> -->
+<div class="col-md-9" data-aos="fade-left"><img src="<%=img%>" alt="profile pic" style=" height:220px; width:100%;  border-radius: 50%;"></div><br>
+</div> 
+    <div class="update-profile">
+         <form  action="/dashboard/upload-<%= user._id%>" enctype="multipart/form-data" method="post">
+         <input type="file" name="upload" /><br/><br>
+         <input type="submit" value="Upload Image" />
+        </form>
+        <form  action="/dashboard/uploadcv-<%= user._id%>" enctype="multipart/form-data" method="post">
+            <input type="file" name="upload" /><br/><br>
+            <input type="submit" value="Upload CV" />
+        </form>
+    </div>
     <div class="row justify-content-center" >
         <div class="col-md-12 " data-aos="fade-right"><h4 style="color:rgb(252, 113, 58); text-align:center;"><%= user.name %></h4></div>
     </div>
@@ -224,7 +230,7 @@
     };
     
    async function apply(id, st){
-            console.log(id + ' '+  st);
+            //console.log(id + ' '+  st);
             try {
                 const res = await fetch('/addrole',{
                     method: 'POST',
@@ -243,9 +249,23 @@
     '<% for(let i=0;i<user.roles.length;i++){ %>'
         applied.push('<%= user.roles[i] %>');
     '<% } %>'
-    function deleterole(num){
-        applied.splice(parseInt(num),1);
-        console.log(applied); 
+    async function deleterole(num){
+        const role = applied[num];
+        console.log(role);
+        const id = '<%= user._id %>';
+        try {
+                const res = await fetch('/deleterole',{
+                    method: 'POST',
+                    body: JSON.stringify({id, role}),
+                    headers: {'Content-Type': 'application/json'}
+                });
+                const data = res.json();
+                if(data) {
+                    location.assign('/dashboard');
+                }
+            }catch (error) {
+                console.log(error);
+            }
     }
     </script>
 <%- include('partials/footer'); -%>
