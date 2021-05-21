@@ -630,6 +630,19 @@ label{
   background-color: #fff;
 }
 
+.mesg-container{
+  display: block;
+  position:fixed;
+  top:40%;
+  left:40%;
+  border:1px blueviolet solid;
+  width:auto;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0px 5px 10px 10px rgba(138, 43, 226, 0.3);
+  background-color: rgb(230, 231, 236);
+}
+
 .floa{
   visibility: hidden;
   transition: .5s ease;
