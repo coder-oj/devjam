@@ -20,6 +20,9 @@ const Formidable = require('formidable');
 const util = require('util');
 
 
+
+
+
 const { requireAuth, checkUser, requireAuthAdmin, checkAdmin } = require('./middleware/authMiddleware');
 const authRoutes = require('./routes/authRoutes');
 const { ResumeToken } = require('mongodb');
@@ -60,7 +63,6 @@ var transporter = nodemailer.createTransport({
 app.get('/', checkUser);
 app.get('/main-form', checkUser);
 app.post('/demo', checkUser);
-
 app.get('/findbyrole',requireAuthAdmin);
 app.get('/displayres-:role', requireAuthAdmin);
 app.post('predict-admin',requireAuthAdmin);
@@ -71,9 +73,9 @@ app.post('main-form-admin',checkAdmin);
 
 // Reset Password Functionality
 
-// Password Verification link to be sent to the email provided in this form!
+// Password Verification link to be sent to the email provided in through form!
 app.get('/forget-password',(req,res)=>{
-  res.render('forgotPassword');
+  res.render('forgotPassword',{errorMessage:req.flash('error'),successMessage:req.flash('success')});
 });
 
 //Check if user with given mail is registered in  post method 
@@ -82,11 +84,17 @@ app.post('/forget-password',(req,res)=>{
 
   // check is email is of user
   User.findOne({'email':email},(err,result)=>{
+
     if(err|| result === null){
+
       // if not user check if email is for admin
       Admin.findOne({'email':email},(err,result)=>{
+
         if(err || result === null){
-          return res.send("USER does not exists");
+
+          req.flash('error',`User with email ${email} Does Not Exist`)
+          return res.redirect('/forget-password');
+
         }
         // Admin Found 
         else{
@@ -104,15 +112,20 @@ app.post('/forget-password',(req,res)=>{
           let mailOptions = {
             from: 'architkeshri4@gmail.com',
             to: email,
-            subject: 'Sending Email using Node.js',
-            text: `password link ${link}`
+            subject: 'Password Reset For Predict My Career',
+            html: `<h1>Password Reset</h1> <br>
+             <p>Click here for Password Reset.This one time Link is Valid for 10 minutes</p> 
+             <a style = "text-decoration:none;" href = "${link}" >Reset Your Password</a>`
           };
           transporter.sendMail(mailOptions, function(error, info){
             if (error) {
               console.log(error);
+              req.flash('error',"Could Not Send Mail");
+              return res.redirect('/forget-password');
             } else {
               console.log('Email sent: ' + info.response);
-              return res.send(`email has been sent to admin ${email}`);
+              req.flash('success',`An E-mail has been sent to  ${email} with further instruction!`)
+              return res.redirect('/forget-password');
 
     
             }
@@ -138,15 +151,21 @@ app.post('/forget-password',(req,res)=>{
       let mailOptions = {
         from: 'architkeshri4@gmail.com',
         to: email,
-        subject: 'Sending Email using Node.js',
-        text: `password link ${link}`
+        subject: 'Password Reset For Predict My Career',
+        html: `<h1>Password Reset</h1> <br>
+         <p>Click here for Password Reset.This one time link is valid for 10 minutes</p> 
+         <a style = "text-decoration:none;" href = "${link}" >Reset Your Password</a>`
       };
       transporter.sendMail(mailOptions, function(error, info){
         if (error) {
           console.log(error);
+          req.flash('error',"Could Not Send Mail");
+          return res.redirect('/forget-password');
         } else {
           console.log('Email sent: ' + info.response);
-          return res.send(`email has been sent to user ${email}`);
+          req.flash('success',`An E-mail has been sent to  ${email} with further instruction!`)
+          return res.redirect('/forget-password');
+
 
         }
       });
@@ -162,7 +181,8 @@ app.get('/reset-password/:id/:token',(req,res)=>{
     if(err || result === null){
       Admin.findOne({'_id':id},(err,result)=>{
         if(err || result === null){
-          res.send("Invalid Link or Link Expired")
+          req.flash('error',"Invalid Link or Link Expired");
+          return res.redirect('/forget-password');
         }
         else{
           let secret = process.env.JWT_PASSWORD_RESET_SECRET + result.password;
@@ -172,7 +192,8 @@ app.get('/reset-password/:id/:token',(req,res)=>{
     
           } catch (error) {
             console.log(error);
-            res.send("errorrrrrr!");
+            req.flash("error","Invalid Link or Link Expired try again!");
+            return res.redirect('/forget-password');
           }
         }
 
@@ -186,8 +207,10 @@ app.get('/reset-password/:id/:token',(req,res)=>{
         return  res.render('resetPassword',{email: result.email});
 
       } catch (error) {
-        res.send("errrrr!");
+     
         console.log(error);
+        req.flash('error',"Invalid Link or Link Expired");
+        return res.redirect('/forget-password');
       }
     }
   });
@@ -199,13 +222,15 @@ app.post('/reset-password/:id/:token',(req,res)=>{
   let {id,token} = req.params;
   let{password,confirmPassword} = req.body;
   if(password !== confirmPassword){
-    return res.send("Password Did Not Match");
+     req.flash('error',"Password Did Not Match");
+     return res.redirect(`/reset-password/${id}/${token}`);
   }
   User.findOne({'_id':id},(err,result)=>{
     if(err || result === null){
       Admin.findOne({'_id':id},(err,result)=>{
         if(err || result === null){
-          res.send("Invalid Link or Link Expired")
+          req.flash('error',"Invalid Link or Link Expired");
+          return res.redirect('/forget-password');
         }
         else{
           let secret = process.env.JWT_PASSWORD_RESET_SECRET + result.password;
@@ -214,24 +239,29 @@ app.post('/reset-password/:id/:token',(req,res)=>{
             bcrypt.genSalt(10,(err,salt)=>{
               if(err){
                 console.log(err);
-                return;
+                req.flash('error','Try Again!');
+                return res.redirect('/forget-password');
               }
               bcrypt.hash(password,salt,(err,hash)=>{
                 Admin.updateOne({'_id':paylod._id},{'password':hash},(err,result)=>{
                   if(err){
                     console.log(err);
+                    req.flash('error','Try Again!');
+                    return res.redirect('/forget-password');
 
                   }
                   else{
-                    res.send("success");
+                    req.flash('success','Password Updated Successfully! Login to Continue');
+                    return res.redirect('/')
                   }
                 });
                 
               })
             });
           } catch (error) {
-            console.log(error);
-            res.send("errorrrrrr!");
+            req.flash('error','Invalid Link or Link expired!');
+            return res.redirect('/forget-password');
+
           }
         }
       });
@@ -252,7 +282,8 @@ app.post('/reset-password/:id/:token',(req,res)=>{
 
               }
               else{
-                return res.send("success");
+                req.flash('success','Password Updated Successfully! Login to Continue');
+                return res.redirect('/');
               }
             });
             
@@ -261,7 +292,9 @@ app.post('/reset-password/:id/:token',(req,res)=>{
       } catch (error) {
 
         console.log(error);
-        return res.send("errorrrr!");
+        req.flash('error','Invalid Link or Link expired!');
+        return res.redirect('/forget-password');
+
       }
     }
   });
@@ -321,7 +354,7 @@ app.get('/main-form-admin', checkAdmin);
 
 //routes
 app.get('/', (req,res) => { 
-    res.render('home');
+    res.render('home',{successMessage:req.flash('success')});
 });
 app.get('/main-form', requireAuth, (req, res) => res.render('main-form'));
 
