@@ -34,6 +34,7 @@ const userSchema = new mongoose.Schema({
     },
     result: Array,
     imgurl: String,
+    cvurl: String,
     roles: Array
    });
   

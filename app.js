@@ -10,11 +10,34 @@ const Admin = require('./models/Admin');
 const Jobrole = require('./models/jobrole');
 const session = require('express-session');
 const flash = require('connect-flash');
+<<<<<<< HEAD
+||||||| b10450d
+<<<<<<< HEAD
+=======
+
+>>>>>>> 804a53b84bb15e8e57ede0d7e0f921d252015266
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
+<<<<<<< HEAD
+||||||| b10450d
+
+
+
+||||||| 78a80f2
+=======
+=======
+
+
+>>>>>>> 804a53b84bb15e8e57ede0d7e0f921d252015266
 const cloudinary = require('cloudinary');
 const Formidable = require('formidable');
 const util = require('util');
+<<<<<<< HEAD
+||||||| b10450d
+>>>>>>> 29a3d92e401d9c1a7e5df73c6f0c61ef0fa81c1d
+=======
+
+>>>>>>> 804a53b84bb15e8e57ede0d7e0f921d252015266
 
 const { requireAuth, checkUser, requireAuthAdmin, checkAdmin } = require('./middleware/authMiddleware');
 const authRoutes = require('./routes/authRoutes');
@@ -305,6 +328,19 @@ app.post('/addrole', async (req,res) =>{
   }});
 });
 
+app.post('/deleterole', async (req,res) =>{
+  const { id, role } = req.body;
+  console.log('app: '+ id+ role);
+  User.updateOne({_id: id}, 
+    {$pull: {roles: role}}, (err, result) =>{
+    if(err){
+      console.log(err);
+    }
+    else{
+      res.redirect('/dashboard');
+  }});
+});
+
 app.get('/findbyrole', (req,res)=> {
     Jobrole.find({}, function(err,roles) {
       if(err){
@@ -342,12 +378,10 @@ app.get('/main-form-admin', requireAuthAdmin, (req, res) =>{
   
   res.render('main-form-admin',{message:req.flash('success')});
 
-
 });
 app.get('/dashboard', requireAuth, (req, res) => res.render('dashboard'));
 
 app.use(authRoutes);
-
 
 app.post('/demo', (req,res)=>{
   //console.log(res.locals.user);
@@ -375,7 +409,7 @@ app.post('/demo', (req,res)=>{
   var q17 = req.body.q17;
   var q18 = req.body.q18;
   var q19 = req.body.q19;
-  var process = spwan('py',['./predict.py',q1, q2, q3, q4, q5, q6, q7, q8, q9, q10,
+  var process = spwan('python',['./predict.py',q1, q2, q3, q4, q5, q6, q7, q8, q9, q10,
                 q11, q12a, q12b, q13a, q13b, q14, q15, q16, q17, q18, q19 ]
 
   // userdata = req.body;
@@ -386,19 +420,23 @@ app.post('/demo', (req,res)=>{
   
   process.stdout.on('data',(data)=>{
     d = data.toString();
-   
+
     var str = d.split("\r\n");
     str.pop();
-    
+  
     var date = Date().substring(4,21) + " IST";
    
     var prediction = {
       s1: str[0].slice(2,str[0].length-2),
       s2: str[1].slice(2,str[1].length-2),
       s3: str[2].slice(2,str[2].length-2),
+      s4: str[3],
+      s5: str[4].slice(0,str[4].length-12),
+      s6: str[5],
       response: {q1: q1, q2: q2, q3: q3, q4: q4, q5: q5, q6: q6, q7: q7, q8: q8, q9: q9, q10: q10, q11: q11, q12a: q12a, q12b: q12b, q13a: q13a, q13b: q13b, q14: q14, q15: q15, q16: q16, q17: q17, q18: q18, q19: q19},
       date:date
     }
+
     if(prediction.s1 === "Software Quality Assurance (QA) / Testing"){
       prediction.s1 = "Software Quality Assurance";
     }
@@ -422,7 +460,6 @@ app.post('/demo', (req,res)=>{
       });
   });
 });
-
 
 app.post('/predict-admin',(req,res)=>{
 
@@ -460,7 +497,6 @@ app.post('/predict-admin',(req,res)=>{
   
   process.stdout.on('data',(data)=>{
     d = data.toString();
-   
     var str = d.split("\r\n");
     str.pop();
     
@@ -490,12 +526,8 @@ app.post('/predict-admin',(req,res)=>{
     req.flash('success', result);
     res.redirect('/main-form-admin');
   
-  });
-
- 
-
+  }); 
 });
-
 
 // Cloudinary configuration for profile pic
 cloudinary.config({
@@ -505,19 +537,50 @@ cloudinary.config({
 });
 
 // Profile pic uploading on cloudinary
-app.post('/dashboard/upload', requireAuth, (req, res) => {
+app.post('/dashboard/upload-:id', requireAuth, (req, res) => {
   // parse a file upload
+  const id = req.params.id;
    const form = new Formidable();
    form.parse(req, (err, fields, files) => {
     cloudinary.uploader.upload(files.upload.path, result => {
-      console.log(result)
+      //console.log(result)
       if (result.public_id) {
-          res.send('Uploaded Successfully! on ' + result.url);
+          //console.log('Uploaded Successfully! on ' + result.url);
+          User.updateOne({_id: id}, 
+            {$set: {imgurl: result.url}}, (err, result) =>{
+            if(err){
+              console.log(err);
+            }
+            else{
+              res.redirect('/dashboard');
+          }});
         }
     });
   });
 });
 
+// CV uploading on cloudinary
+app.post('/dashboard/uploadcv-:id', requireAuth, (req, res) => {
+  // parse a file upload
+  const id = req.params.id;
+   const form = new Formidable();
+   form.parse(req, (err, fields, files) => {
+    cloudinary.uploader.upload(files.upload.path, result => {
+      console.log(result)
+      if (result.public_id) {
+          //console.log('Uploaded Successfully! on ' + result.url);
+          User.updateOne({_id: id}, 
+            {$set: {cvurl: result.url}}, (err, result) =>{
+            if(err){
+              console.log(err);
+            }
+            else{
+              res.redirect('/dashboard');
+          }});
+        }
+    });
+  });
+});
 
 const port = 8000;
 app.listen(port, () =>{
