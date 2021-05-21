@@ -1,9 +1,13 @@
 <%- include('partials/adminheader'); -%>
 <div class="row">
     <div class="col-md-3">
+        <% let img = "assets/img/profile.png"; %>
+        <% if(admin.imgurl !== ""){ %>
+        <%    img = admin.imgurl; %>
+        <% } %>
         <div class="row justify-content-center">
-            <div class="col-md-6 "><img src="assets/img/profile.png" alt="profile pic" style="width:100%; border-radius: 50%;"></div>
-        </div>
+            <div class="col-md-9" data-aos="fade-left"><img src="<%=img%>" alt="profile pic" style=" height:220px; width:100%;  border-radius: 50%;"></div><br>
+        </div> 
         <div class="row justify-content-center" >
             <div class="col-md-12 " data-aos="fade-right"><h4 style="color:rgb(252, 113, 58); text-align:center;"><%= admin.name %></h4></div>
         </div>
