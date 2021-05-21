@@ -16,20 +16,6 @@
   <link href="assets/vendor/aos/aos.css" rel="stylesheet">
 </head>
 <body>
-  <!--nav>
-    <h1><a href="/">Career Predictor</a></h1>
-    <ul>
-      <% if (user) { %>
-      <li>Welcome, <%= user.name %> </li>
-      <li> <a href="/logout">Log Out</a></li>
-      <% } else { %>
-      <li> <a href="/login">Log In</a></li>
-      <li><a href="/signup" class="btn">Sign Up</a></li>
-      <li> <a href="/adminlogin">Admin Log In</a></li>
-      <li><a href="/adminsignup" class="btn">Admin Sign Up</a></li>
-      <% } %>
-    </ul>
-  </nav-->
   <header id="header">
     <div class="container d-flex align-items-center justify-content-between">
 
@@ -38,7 +24,6 @@
         <!-- Uncomment below if you prefer to use an image logo -->
         <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
       </div>
-
       <nav id="navbar" class="navbar">
         <ul>
           <% if (user) { %>

@@ -1,12 +1,23 @@
 <%- include('partials/adminheader'); -%>
 <div class="row">
     <div class="col-md-3">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="section-title">
+                    <h2 data-aos="fade-in">Profile</h2>
+                </div>
+            </div>
+        </div>
         <% let img = "assets/img/profile.png"; %>
         <% if(admin.imgurl !== ""){ %>
         <%    img = admin.imgurl; %>
         <% } %>
         <div class="row justify-content-center">
-            <div class="col-md-9" data-aos="fade-left"><img src="<%=img%>" alt="profile pic" style=" height:220px; width:100%;  border-radius: 50%;"></div><br>
+            <div class="col-md-9 contain" data-aos="fade-left">
+                <div class="floa"><a onclick="toggle('upload-container')"><i class="fas fa-camera fa-2x text"></i></a></div>
+                <a onclick="toggle('upload-container')">
+                    <img src="<%=img%>" alt="profile pic" class="image">
+            </div><br>
         </div> 
         <div class="row justify-content-center" >
             <div class="col-md-12 " data-aos="fade-right"><h4 style="color:rgb(252, 113, 58); text-align:center;"><%= admin.name %></h4></div>
@@ -39,8 +50,8 @@
         <div class="card" style="width: 18rem;">
             <img class="card-img-top" src="assets/img/jobs-img/<%=element.name%>.jpg" alt="Card image cap">
             <div class="card-body">
-                <h5 class="card-title" style="font-weight: 700;"><%= element.name %></h5>
-                <a href="/displayres-<%=element.name%>" class="btn"> Click here to find candidates for this role! </a>
+                <h5 class="card-title" style="font-weight: 700; text-align: center;"><%= element.name %></h5>
+                <a href="/displayres-<%=element.name%>" class="btn btn-primary"> Click here to find candidates for this role! </a>
             </div>
         </div>
     </div> 
@@ -50,5 +61,32 @@
     <% } %>
          <% }); %>
 </div></div>
+<div class="row">
+    <div class="container upload-container" id="upload-container">
+        <div class="row">
+            <div class="col-md-9 offset-md-1">
+                <h4 style="font-weight: 700; text-align: center;">Update Profile</h4>
+            </div>
+            <div class="col-md-1 offset-md-1">
+                <a style="font-size: 20px" onclick="clos('upload-container');"><i class="fas fa-times"></i></a>
+            </div>
+        </div>
+        <form action="/findbyrole/upload-<%= admin._id%>" enctype="multipart/form-data" method="post">
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="update-photo" class="form-label">Select Photo</label>
+                    <div class="input-group">
+                        <input type="file" class="form-control" id="update-photo" name="upload" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <input type="submit" class="btn btn-primary" value="Upload Image" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 
 <%- include('partials/footer'); -%>
