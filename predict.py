@@ -1,6 +1,6 @@
 import sys
 import pickle
-
+import numpy as np
 
 file1 = open('./model1.pkl', 'rb')
 clf1 = pickle.load(file1)
@@ -18,9 +18,19 @@ userdata = [[sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], sy
 
 # Prediction By Decision Tree
 print(clf1.predict(userdata)) 
+classprobs1 = clf1.predict_proba(userdata)
+predclassprob1 = np.max(classprobs1)
 
 # Prediction By SVM
 print(clf2.predict(userdata)) 
+classprobs2 = clf2.decision_function(userdata)
+predclassprob2 = np.max(classprobs2)
 
-# "Prediction By Random Forest
+# Prediction By Random Forest
 print(clf3.predict(userdata)) 
+classprobs3 = clf3.predict_proba(userdata)
+predclassprob3 = np.max(classprobs3)
+
+print(predclassprob1)
+print(predclassprob2)
+print(predclassprob3)
