@@ -511,14 +511,23 @@ app.post('/dashboard/upload-:id', requireAuth, (req, res) => {
 });
 
 // CV uploading on cloudinary
-app.post('/dashboard/uploadcv', requireAuth, (req, res) => {
+app.post('/dashboard/uploadcv-:id', requireAuth, (req, res) => {
   // parse a file upload
+  const id = req.params.id;
    const form = new Formidable();
    form.parse(req, (err, fields, files) => {
     cloudinary.uploader.upload(files.upload.path, result => {
       console.log(result)
       if (result.public_id) {
-          res.send('Uploaded Successfully! on ' + result.url);
+          //console.log('Uploaded Successfully! on ' + result.url);
+          User.updateOne({_id: id}, 
+            {$set: {cvurl: result.url}}, (err, result) =>{
+            if(err){
+              console.log(err);
+            }
+            else{
+              res.redirect('/dashboard');
+          }});
         }
     });
   });

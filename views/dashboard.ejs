@@ -16,7 +16,7 @@
          <input type="file" name="upload" /><br/><br>
          <input type="submit" value="Upload Image" />
         </form>
-        <form  action="/dashboard/uploadcv" enctype="multipart/form-data" method="post">
+        <form  action="/dashboard/uploadcv-<%= user._id%>" enctype="multipart/form-data" method="post">
             <input type="file" name="upload" /><br/><br>
             <input type="submit" value="Upload CV" />
         </form>
