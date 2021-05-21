@@ -11,10 +11,16 @@
     <div class="row justify-content-center">
         <div class="col-md-6 "><img src="assets/img/profile.png" alt="profile pic" style="width:100%; border-radius: 50%;"></div><br>
     </div>
-    <form  action="/dashboard/upload" enctype="multipart/form-data" method="post">
-    <input type="file" name="upload" /><br/><br>
-    <input type="submit" value="Upload Image" />
-    </form>
+    <div class="update-profile">
+        <form  action="/dashboard/uploadimg" enctype="multipart/form-data" method="post">
+        <input type="file" name="upload" /><br/><br>
+        <input type="submit" value="Upload Image" />
+        </form>
+        <form  action="/dashboard/uploadcv" enctype="multipart/form-data" method="post">
+            <input type="file" name="upload" /><br/><br>
+            <input type="submit" value="Upload CV" />
+        </form>
+    </div>
     <div class="row justify-content-center" >
         <div class="col-md-12 " data-aos="fade-right"><h4 style="color:rgb(252, 113, 58); text-align:center;"><%= user.name %></h4></div>
     </div>
