@@ -279,6 +279,19 @@ app.post('/addrole', async (req,res) =>{
   }});
 });
 
+app.post('/deleterole', async (req,res) =>{
+  const { id, role } = req.body;
+  console.log('app: '+ id+ role);
+  User.updateOne({_id: id}, 
+    {$pull: {roles: role}}, (err, result) =>{
+    if(err){
+      console.log(err);
+    }
+    else{
+      res.redirect('/dashboard');
+  }});
+});
+
 app.get('/findbyrole', (req,res)=> {
     Jobrole.find({}, function(err,roles) {
       if(err){
@@ -316,12 +329,10 @@ app.get('/main-form-admin', requireAuthAdmin, (req, res) =>{
   
   res.render('main-form-admin',{message:req.flash('success')});
 
-
 });
 app.get('/dashboard', requireAuth, (req, res) => res.render('dashboard'));
 
 app.use(authRoutes);
-
 
 app.post('/demo', (req,res)=>{
   //console.log(res.locals.user);
@@ -401,7 +412,6 @@ app.post('/demo', (req,res)=>{
   });
 });
 
-
 app.post('/predict-admin',(req,res)=>{
 
   let spwan = require('child_process').spawn;
@@ -467,12 +477,8 @@ app.post('/predict-admin',(req,res)=>{
     req.flash('success', result);
     res.redirect('/main-form-admin');
   
-  });
-
- 
-
+  }); 
 });
-
 
 // Cloudinary configuration for profile pic
 cloudinary.config({
@@ -482,14 +488,23 @@ cloudinary.config({
 });
 
 // Profile pic uploading on cloudinary
-app.post('/dashboard/upload', requireAuth, (req, res) => {
+app.post('/dashboard/upload-:id', requireAuth, (req, res) => {
   // parse a file upload
+  const id = req.params.id;
    const form = new Formidable();
    form.parse(req, (err, fields, files) => {
     cloudinary.uploader.upload(files.upload.path, result => {
-      console.log(result)
+      //console.log(result)
       if (result.public_id) {
-          res.send('Uploaded Successfully! on ' + result.url);
+          //console.log('Uploaded Successfully! on ' + result.url);
+          User.updateOne({_id: id}, 
+            {$set: {imgurl: result.url}}, (err, result) =>{
+            if(err){
+              console.log(err);
+            }
+            else{
+              res.redirect('/dashboard');
+          }});
         }
     });
   });
