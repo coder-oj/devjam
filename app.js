@@ -352,7 +352,7 @@ app.post('/demo', (req,res)=>{
   var q17 = req.body.q17;
   var q18 = req.body.q18;
   var q19 = req.body.q19;
-  var process = spwan('py',['./predict.py',q1, q2, q3, q4, q5, q6, q7, q8, q9, q10,
+  var process = spwan('python',['./predict.py',q1, q2, q3, q4, q5, q6, q7, q8, q9, q10,
                 q11, q12a, q12b, q13a, q13b, q14, q15, q16, q17, q18, q19 ]
 
   // userdata = req.body;
@@ -363,19 +363,23 @@ app.post('/demo', (req,res)=>{
   
   process.stdout.on('data',(data)=>{
     d = data.toString();
-   
+
     var str = d.split("\r\n");
     str.pop();
-    
+  
     var date = Date().substring(4,21) + " IST";
    
     var prediction = {
       s1: str[0].slice(2,str[0].length-2),
       s2: str[1].slice(2,str[1].length-2),
       s3: str[2].slice(2,str[2].length-2),
+      s4: str[3],
+      s5: str[4].slice(0,str[4].length-12),
+      s6: str[5],
       response: {q1: q1, q2: q2, q3: q3, q4: q4, q5: q5, q6: q6, q7: q7, q8: q8, q9: q9, q10: q10, q11: q11, q12a: q12a, q12b: q12b, q13a: q13a, q13b: q13b, q14: q14, q15: q15, q16: q16, q17: q17, q18: q18, q19: q19},
       date:date
     }
+
     if(prediction.s1 === "Software Quality Assurance (QA) / Testing"){
       prediction.s1 = "Software Quality Assurance";
     }
@@ -437,7 +441,6 @@ app.post('/predict-admin',(req,res)=>{
   
   process.stdout.on('data',(data)=>{
     d = data.toString();
-   
     var str = d.split("\r\n");
     str.pop();
     
