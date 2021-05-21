@@ -10,11 +10,8 @@ const Admin = require('./models/Admin');
 const Jobrole = require('./models/jobrole');
 const session = require('express-session');
 const flash = require('connect-flash');
-
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
-
-
 const cloudinary = require('cloudinary');
 const Formidable = require('formidable');
 const util = require('util');
@@ -31,7 +28,7 @@ const app = express();
 dotenv.config({path: './.env'});
 
 app.use(flash());
-app.use(session({secret: 'ssshhh', saveUninitialized: true, resave: true}));
+app.use(session({secret: process.env.SESSION_SECRET, saveUninitialized: true, resave: true}));
 //middleware
 app.use(express.static(__dirname+'/public'));
 app.use(express.json());
@@ -54,7 +51,7 @@ mongoose.connect(process.env.DATABASE_URL , {useNewUrlParser: true, useCreateInd
 var transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'architkeshri4@gmail.com',
+    user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_APP_PASS
   }
 });
@@ -223,7 +220,7 @@ app.post('/reset-password/:id/:token',(req,res)=>{
   let{password,confirmPassword} = req.body;
   if(password !== confirmPassword){
      req.flash('error',"Password Did Not Match");
-     return res.redirect(`/reset-password/${id}/${token}`);
+     return res.redirect('/forget-password');
   }
   User.findOne({'_id':id},(err,result)=>{
     if(err || result === null){
@@ -393,7 +390,7 @@ app.post('/demo', (req,res)=>{
   var q17 = req.body.q17;
   var q18 = req.body.q18;
   var q19 = req.body.q19;
-  var process = spwan('python',['./predict.py',q1, q2, q3, q4, q5, q6, q7, q8, q9, q10,
+  var process = spwan('py',['./predict.py',q1, q2, q3, q4, q5, q6, q7, q8, q9, q10,
                 q11, q12a, q12b, q13a, q13b, q14, q15, q16, q17, q18, q19 ]
 
   // userdata = req.body;
@@ -566,7 +563,7 @@ app.post('/dashboard/uploadcv-:id', requireAuth, (req, res) => {
   });
 });
 
-const port = 8000;
+const port = process.env.PORT ||  8000;
 app.listen(port, () =>{
     console.log(`Server is running on localhost ${port}`);
 });

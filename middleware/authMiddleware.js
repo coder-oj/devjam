@@ -6,7 +6,7 @@ const requireAuth = (req, res, next) =>{
     const token = req.cookies.jwt;
     //check json web token exists & is verfied
     if (token) {
-        jwt.verify(token, 'secret string', (err, decodedToken)=>{
+        jwt.verify(token, process.env.JWT_SECRET_USER, (err, decodedToken)=>{
             if(err) {
                 console.log(err.message);
                 res.redirect('/');
@@ -24,7 +24,7 @@ const requireAuthAdmin = (req, res, next) =>{
     const token = req.cookies.jwtadm;
     //check json web token exists & is verified
     if (token) {
-        jwt.verify(token, 'secret string admin', (err, decodedToken)=>{
+        jwt.verify(token, process.env.JWT_SECRET_ADMIN, (err, decodedToken)=>{
             if(err) {
                 console.log(err.message);
                 res.redirect('/adminlogin');
@@ -43,7 +43,7 @@ const requireAuthAdmin = (req, res, next) =>{
      const token = req.cookies.jwt;
 
      if(token) {
-        jwt.verify(token, 'secret string', async (err, decodedToken)=>{
+        jwt.verify(token, process.env.JWT_SECRET_USER, async (err, decodedToken)=>{
             if(err) {
                 console.log(err.message);
                 res.locals.user = null;
@@ -67,7 +67,7 @@ const requireAuthAdmin = (req, res, next) =>{
     const token = req.cookies.jwtadm;
 
     if(token) {
-       jwt.verify(token, 'secret string admin', async (err, decodedToken)=>{
+       jwt.verify(token, process.env.JWT_SECRET_ADMIN, async (err, decodedToken)=>{
            if(err) {
                console.log(err.message);
                res.locals.admin = null;
