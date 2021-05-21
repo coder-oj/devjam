@@ -2,12 +2,19 @@
 <div class="row">
 <div class="col-md-3">
     <div class="row justify-content-center">
-        <form action="/dashboard/upload" enctype="multipart/form-data" method="post">
-            <div class="col-md-6 "><img src="assets/img/profile.png" alt="profile pic" style="width:100%; border-radius: 50%;"></div><br>
-            <input type="file" name="upload" /><br/><br>
-            <input type="submit" value="Upload Image" />
-          </form>
+        <div class="col-md-10">
+            <div class="section-title">
+                <h2 data-aos="fade-in">Profile</h2>
+            </div>
+        </div>
     </div>
+    <div class="row justify-content-center">
+        <div class="col-md-6 "><img src="assets/img/profile.png" alt="profile pic" style="width:100%; border-radius: 50%;"></div><br>
+    </div>
+    <form  action="/dashboard/upload" enctype="multipart/form-data" method="post">
+    <input type="file" name="upload" /><br/><br>
+    <input type="submit" value="Upload Image" />
+    </form>
     <div class="row justify-content-center" >
         <div class="col-md-12 " data-aos="fade-right"><h4 style="color:rgb(252, 113, 58); text-align:center;"><%= user.name %></h4></div>
     </div>
@@ -23,8 +30,30 @@
     <div class="row justify-content-center">
         <div class="col-md-6 justify-content-right" data-aos="fade-right"><h5 style="text-align:right;"><a href="<%= user.linkedin %>" target="_blank"><i class="fab fa-linkedin fa-lg"></i></a></h5></div>
         <div class="col-md-6 justify-content-left" data-aos="fade-right"><h5 style="text-align:left;"><a href="mailto:<%= user.email %>"><i class="fas fa-paper-plane"></i></a></h5></div>
-        
     </div>
+    <br>
+    <hr style="height: 2px; color: blueviolet;"/><br>
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="section-title">
+                <h2 data-aos="fade-in">Jobs Applied</h2>
+            </div>
+        </div>
+    </div>
+    <% for(let i=0;i<user.roles.length;i++){ %>
+        <div class="row data-aos="fade-in"">
+            <div class="row alert-success alert-dismissible fade show">
+                <div class="col-md-11">
+                    <strong><%= user.roles[i] %></strong> 
+                </div>
+                <div class="col-md-1">
+                    <a><i class="fas fa-times" onclick="deleterole('<%= i %>');"></i></a>
+                </div>
+            </div>
+        </div>
+    <% } %>
+    
+
 </div>
 <% const subjects = ['Software Engineering', 'IOT', 'cloud computing', 'programming', 'networks', 'Computer Architecture', 'data engineering', 'hacking', 'Management', 'parallel computing']; %>
 <% const books = ["Guide","Health","Self help","Horror","Biographies","Science fiction","Childrens","Satire","Autobiographies","Prayer books","Fantasy","Journals","Trilogy","Anthology","Encyclopedias","Drama","Mystery","History","Dictionaries","Science","Religion-Spirituality","Diaries","Poetry","Action and Adventure","Cookbooks","Travel","Art","Comics","Series","Math","Romance"]; %>
@@ -201,6 +230,13 @@
                 console.log(error);
             }
     }
-
-</script>
+    var applied = [];
+    '<% for(let i=0;i<user.roles.length;i++){ %>'
+        applied.push('<%= user.roles[i] %>');
+    '<% } %>'
+    function deleterole(num){
+        applied.splice(parseInt(num),1);
+        console.log(applied); 
+    }
+    </script>
 <%- include('partials/footer'); -%>
