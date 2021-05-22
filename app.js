@@ -360,7 +360,9 @@ app.get('/main-form-admin', requireAuthAdmin, (req, res) =>{
   res.render('main-form-admin',{message:req.flash('success')});
 
 });
-app.get('/dashboard', requireAuth, (req, res) => res.render('dashboard'));
+app.get('/dashboard', requireAuth, (req, res) =>{ 
+    res.render('dashboard',{message:req.flash('success')});
+});
 
 app.use(authRoutes);
 
@@ -533,6 +535,7 @@ app.post('/dashboard/upload-:id', requireAuth, (req, res) => {
               console.log(err);
             }
             else{
+              req.flash('success','Profile Picture uploaded successfully!')
               res.redirect('/dashboard');
           }});
         }
@@ -578,6 +581,7 @@ app.post('/dashboard/uploadcv-:id', requireAuth, (req, res) => {
               console.log(err);
             }
             else{
+              req.flash('success','Resume uploaded successfully!');
               res.redirect('/dashboard');
           }});
         }
