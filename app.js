@@ -16,10 +16,6 @@ const cloudinary = require('cloudinary');
 const Formidable = require('formidable');
 const util = require('util');
 
-
-
-
-
 const { requireAuth, checkUser, requireAuthAdmin, checkAdmin } = require('./middleware/authMiddleware');
 const authRoutes = require('./routes/authRoutes');
 const { ResumeToken } = require('mongodb');
@@ -29,7 +25,6 @@ dotenv.config({path: './.env'});
 
 app.use(flash());
 app.use(session({secret: process.env.SESSION_SECRET, saveUninitialized: true, resave: true}));
-//middleware
 app.use(express.static(__dirname+'/public'));
 app.use(express.json());
 app.use(cookieParser());
