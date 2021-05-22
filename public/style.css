@@ -670,4 +670,21 @@ label{
 .contain:hover .floa {
   visibility: visible;
 }
+
+/* pop up styling */
+
+.swal-overlay {
+  background-color: rgba(56, 74, 153, 0.45);
+}
+
+.swal-btn {
+  padding: 7px 19px;
+  border-radius: 2px;
+  background-color: #4962B3;
+  font-size: 12px;
+  border: 1px solid #3e549a;
+  text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.3);
+}
+
+
 /* https://res.cloudinary.com/umang/image/upload/v1621581134/ubesr2i78l4mj2bd2ylb.jpg */

@@ -1,4 +1,22 @@
 <%- include('partials/header'); -%>
+<% if(message.length>0) { %>
+
+    <script>
+        var msg = '<%= message %>'
+        function popup(){
+            swal("", msg , "success", {
+            button: {
+                text:"Ok",
+                className:"swal-btn",         
+            }  
+    });
+        }
+        popup();
+    </script>    
+ 
+     
+<% } %>
+
 <div class="row">
 <div class="col-md-3">
     <div class="row justify-content-center">
@@ -8,7 +26,7 @@
             </div>
         </div>
     </div>
-    <% let img = "assets/img/profile.png"; %>
+    <% let img = `assets/img/profile.png`; %>
     <% if(user.imgurl !== ""){ %>
     <%    img = user.imgurl; %>
     <% } %>
@@ -16,7 +34,7 @@
         <div class="col-md-9 contain" data-aos="fade-left">
             <div class="floa"><a onclick="toggle('upload-container')"  title="Update Profile"><i class="fas fa-camera fa-2x text"></i></a></div>
             <a onclick="toggle('upload-container')">
-                <img src="<%=img%>" alt="profile pic" class="image">
+                <img src=<%=img%> alt="profile pic" class="image">
         </div><br>
     </div>
     
@@ -266,8 +284,16 @@
         </form>
     </div>
 </div>
+<<<<<<< HEAD
+
+||||||| f72c356
+=======
 <div class="row" id='mesg-contain'></div>
+>>>>>>> 5ace467609d61feff79eae77f4bafc6704e5fe6f
 <script> 
+ 
+    
+    
     function show(ob, cur){
         var resp = document.getElementById(ob);
         var curr = document.getElementById(cur);
