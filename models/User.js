@@ -34,7 +34,7 @@ const userSchema = new mongoose.Schema({
     },
     result: Array,
     imgurl: {type: String, default: "assets/img/profile.png"},
-    cvurl: String,
+    cvurl: {type: String, default: ""},
     roles: Array
    });
   
