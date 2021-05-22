@@ -51,7 +51,11 @@
         <div class="col-md-12 " data-aos="fade-right"><h5 style="text-align:center;">Studying in <%= user.college %></h5></div>
     </div>
     <div class="row justify-content-center" data-aos="fade-right">
-        <div class="col-md-4 justify-content-right"><h5 style="text-align:right;"><a href="<%= user.cvurl %>" target="_blank" title="Resume"><i class="fas fa-file-pdf fa-lg"></i></a></h5></div>
+        <% if(user.cvurl === ""){ %>
+            <div class="col-md-4 justify-content-right"><h5 style="text-align:right;"><a onclick="toggle('upload-container-1')" onmouseout="cloos()" onmouseover="messg('Please Upload Resume', '<i style=\'color:orange\' class=\'far fa-grin-beam fa-2x\'></i>', 'fade-up');" title="Please Upload Resume"><i class="fas fa-file-pdf fa-lg"></i></a></h5></div> 
+        <% }else{ %> 
+            <div class="col-md-4 justify-content-right"><h5 style="text-align:right;"><a href="<%= user.cvurl %>" target="_blank" oncontextmenu="toggle('upload-container-1')" title="View Resume/ Right Click to Update"><i class="fas fa-file-pdf fa-lg"></i></a></h5></div>
+        <% } %>
         <div class="col-md-4 justify-content-center"><h5 style="text-align:center;"><a href="<%= user.linkedin %>" target="_blank" title="LinkedIn Profile"><i class="fab fa-linkedin fa-lg"></i></a></h5></div>
         <div class="col-md-4 justify-content-left"><h5 style="text-align:left;"><a href="mailto:<%= user.email %>" title="Email"><i class="fas fa-paper-plane"></i></a></h5></div>
     </div>
@@ -74,7 +78,7 @@
                         <strong><%= user.roles[i] %></strong> 
                     </div>
                     <div class="col-md-1">
-                        <a><i class="fas fa-times" onclick="deleterole('<%= i %>');"></i></a>
+                        <a><i class="fas fa-trash-alt" onclick="deleterole('<%= i %>');" onmouseout="style.color = 'black';" onmouseover="style.color='red';"></i></a>
                     </div>
                 </div>
             </div>
@@ -117,7 +121,7 @@
                 <% checkArr((element.s1).toString()) %>
                 <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
                     <% if(flag){ %>
-                        <button id='a<%= count%>' onclick="alert('Already Selected');" style="border:none;">
+                        <button id='a<%= count%>' onclick="messg('Already Applied', '<i style=\'color: green;\' class=\'fas fa-check-circle fa-2x\'></i>', 'zoom-out-down');" style="border:none;">
                     <% } else { %>
                         <button id='a<%= count%>' onclick="apply('<%= user._id%>','<%= element.s1 %>');" style="border:none;">
                         <% } %>
@@ -136,7 +140,7 @@
                 <% checkArr((element.s2).toString()) %>
                 <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
                     <% if(flag){ %>
-                        <button id='b<%= count%>' onclick="alert('Already Selected');" style="border:none;">
+                        <button id='b<%= count%>' onclick="messg('Already Applied',  '<i style=\'color: green;\' class=\'fas fa-check-circle fa-2x\'></i>', 'zoom-out-down');" style="border:none;">
                     <% } else { %>
                         <button id='b<%= count%>' onclick="apply('<%= user._id%>', '<%= element.s2 %>');" style="border:none;">
                         <% } %>
@@ -156,7 +160,7 @@
                 <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
                     
                     <% if(flag){ %>
-                        <button id='c<%= count%>' onclick="alert('Already Selected');" style="border:none;">
+                        <button id='c<%= count%>' onclick="messg('Already Applied', '<i style=\'color: green;\' class=\'fas fa-check-circle fa-2x\'></i>', 'zoom-out-down');" style="border:none;">
                     <% } else { %>
                         <button id='c<%= count%>' onclick="apply('<%= user._id%>', '<%= element.s3 %>');" style="border:none;">
                         <% } %>
@@ -253,6 +257,16 @@
                 </div>
             </div>
         </form>
+    </div>
+    <div class="container upload-container" id="upload-container-1">
+        <div class="row">
+            <div class="col-md-9 offset-md-1">
+                <h4 style="font-weight: 700; text-align: center;">Upload Resume</h4>
+            </div>
+            <div class="col-md-1 offset-md-1">
+                <a style="font-size: 20px" onclick="clos('upload-container-1');"><i class="fas fa-times"></i></a>
+            </div>
+        </div>
         <form action="/dashboard/uploadcv-<%= user._id%>" enctype="multipart/form-data" method="post">
             <div class="row">
                 <div class="col-md-12">
@@ -270,7 +284,12 @@
         </form>
     </div>
 </div>
+<<<<<<< HEAD
 
+||||||| f72c356
+=======
+<div class="row" id='mesg-contain'></div>
+>>>>>>> 5ace467609d61feff79eae77f4bafc6704e5fe6f
 <script> 
  
     
@@ -329,6 +348,12 @@
                 console.log(error);
             }
     }
-
+    function messg(text, font, aos)
+    { 
+        document.getElementById('mesg-contain').innerHTML = '<div class="container mesg-container" id="mesg" data-aos="'+aos+'"><div class="row"><div class="col-md-11">'+font+'<h4 style="font-weight: 700;display: inline; color: green;text-align: center;"> '+text+'</h4></div><div class="col-md-1"><a style="font-size: 20px" onclick="cloos(\'mesg-contain\');"><i class="far fa-times-circle fa-lg"></i></a></div>'
+    }
+    function cloos(){
+        document.getElementById('mesg-contain').innerHTML = '';
+    }
     </script>
 <%- include('partials/footer'); -%>

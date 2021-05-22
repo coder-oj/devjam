@@ -498,7 +498,7 @@ section {
   margin-left: 60px;
 }
 
-.about .image {
+.about .imagi {
   background: url("assets/img/features-1.svg") center center no-repeat;
   background-size: cover;
   min-height: 400px;
@@ -628,6 +628,19 @@ label{
   border-radius: 15px;
   box-shadow: 0px 5px 10px 10px rgba(138, 43, 226, 0.3);
   background-color: #fff;
+}
+
+.mesg-container{
+  display: block;
+  position:fixed;
+  top:40%;
+  left:40%;
+  border:1px blueviolet solid;
+  width:auto;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0px 5px 10px 10px rgba(138, 43, 226, 0.3);
+  background-color: rgb(230, 231, 236);
 }
 
 .floa{
