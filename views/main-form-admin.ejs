@@ -1,49 +1,21 @@
 <%- include('partials/adminheader'); -%>
 
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Admin Page</h1>
-</body>
-</html>  ! -->
-
-
-
-	<!DOCTYPE html>
-	<html lang="en">
-
-	<head>
-		<meta charset="UTF-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
-			integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
-			integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
-		<link rel="stylesheet" href="style.css">
-		<title>Signup page</title>
-	</head>
-
-	<body style="margin:20px">
+<% if(message.length>0){ %>
+	<div class="alert alert-success" style="margin: 20px; text-align: center;">
+		<h5><%= message %> </h5>
+	</div> 
+<% } %>
+	<div class="row effect">
 		
-		<% if(message.length>0){ %>
-			<div class="alert alert-success" style="margin: 20px; text-align: center;">
-				<h5><%= message %> </h5>
-			</div> 
-		<% } %>
 		<div class="container-md">
-
-		 
 			<div class="row justify-content-center">
-				<h3 class="col-3">Questionaire Form
-				</h3>
+				<div class="col-md-10">
+					<div class="section-title">
+						<h2>Questionnaire</h2>
+					</div>
+				</div>
 			</div>
+
 			<form class="row" action="/predict-admin" method="POST">
 				<div class="row">
 					<div class="col-md-6">
@@ -398,14 +370,15 @@
 							</div>
 						</div>
 					</div>
-					<div class="row">
-						<div class="col-12">
-							<button class="btn btn-primary" id="subm" onclick="loader('subm');">Submit form</button>
+					<div class="row justify-content-center">
+						<div class="col-3">
+							<button class="btn btn-primary btn-lg" id="subm" onclick="loader('subm');">Submit form</button>
 						</div>
 					</div>
 			</form>
 		</div>
-
+	</div>
+</div>
 		<script>
 			function updateTextInput(val, valn) {
 				document.getElementById(valn).innerHTML = val;
@@ -415,9 +388,8 @@
 				document.getElementById(b).checked = true;
 			}
 			function loader(el){
-				document.getElementById(el).innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+				document.getElementById(el).innerHTML = '<span class="spinner-border spinner-border-md" role="status" aria-hidden="true"></span><span style="font-size:25px;"> Predicting...</span>'
 			}
 		</script>
-	</body>
 
-	</html>
+<%- include('partials/footer') -%>

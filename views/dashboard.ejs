@@ -50,14 +50,14 @@
     <div class="row justify-content-center">
         <div class="col-md-12 " data-aos="fade-right"><h5 style="text-align:center;">Studying in <%= user.college %></h5></div>
     </div>
-    <div class="row justify-content-center" data-aos="fade-right">
+    <div class="row justify-content-center">
         <% if(user.cvurl === ""){ %>
-            <div class="col-md-4 justify-content-right"><h5 style="text-align:right;"><a onclick="toggle('upload-container-1')" onmouseout="cloos()" onmouseover="messg('Please Upload Resume', '<i style=\'color:orange\' class=\'far fa-grin-beam fa-2x\'></i>', 'fade-up');" title="Please Upload Resume"><i class="fas fa-file-pdf fa-lg"></i></a></h5></div> 
+            <div class="col-md-4" data-aos="zoom-in-left"><h5 style="text-align:right;"><a onclick="toggle('upload-container-1')" onmouseout="cloos()" onmouseover="messg('Please Upload Resume', '<i style=\'color:orange\' class=\'far fa-grin-beam fa-2x\'></i>', 'fade-up');" title="Please Upload Resume"><i class="fas fa-file-pdf fa-lg"></i></a></h5></div> 
         <% }else{ %> 
-            <div class="col-md-4 justify-content-right"><h5 style="text-align:right;"><a href="<%= user.cvurl %>" target="_blank" oncontextmenu="toggle('upload-container-1')" title="View Resume/ Right Click to Update"><i class="fas fa-file-pdf fa-lg"></i></a></h5></div>
+            <div class="col-md-4" data-aos="zoom-in-left"><h5 style="text-align:right;"><a href="<%= user.cvurl %>" target="_blank" oncontextmenu="toggle('upload-container-1')" title="View Resume/ Right Click to Update"><i class="fas fa-file-pdf fa-lg"></i></a></h5></div>
         <% } %>
-        <div class="col-md-4 justify-content-center"><h5 style="text-align:center;"><a href="<%= user.linkedin %>" target="_blank" title="LinkedIn Profile"><i class="fab fa-linkedin fa-lg"></i></a></h5></div>
-        <div class="col-md-4 justify-content-left"><h5 style="text-align:left;"><a href="mailto:<%= user.email %>" title="Email"><i class="fas fa-paper-plane"></i></a></h5></div>
+        <div class="col-md-4" data-aos="zoom-in"><h5 style="text-align:center;"><a href="<%= user.linkedin %>" target="_blank" title="LinkedIn Profile"><i class="fab fa-linkedin fa-lg"></i></a></h5></div>
+        <div class="col-md-4" data-aos="zoom-in-right"><h5 style="text-align:left;"><a href="mailto:<%= user.email %>" title="Email"><i class="fas fa-paper-plane"></i></a></h5></div>
     </div>
     <br>
     <hr style="height: 2px; color: blueviolet;"/><br>
