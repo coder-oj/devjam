@@ -365,7 +365,7 @@
 						</div>
 					</div>
 					<div class="row justify-content-center">
-						<div class="col-2">
+						<div class="col-3">
 							<button class="btn btn-primary btn-lg" id="subm" onclick="loader('subm');">Submit form</button>
 						</div>
 					</div>
@@ -382,7 +382,7 @@
 				document.getElementById(b).checked = true;
 			}
 			function loader(el){
-				document.getElementById(el).innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+				document.getElementById(el).innerHTML = '<span class="spinner-border spinner-border-md" role="status" aria-hidden="true"></span><span style="font-size:25px;"> Predicting...</span>'
 				
 			}
 		</script>
